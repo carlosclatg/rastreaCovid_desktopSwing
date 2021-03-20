@@ -11,6 +11,10 @@ import java.awt.event.WindowListener;
 import java.util.prefs.Preferences;
 
 public class LoginForm extends JFrame implements ActionListener, WindowListener {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     JButton SUBMIT;
     JPanel panel;
     JLabel label1, label2;
@@ -38,24 +42,24 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
         setTitle("LOGIN FORM");
     }
 
-
     public void actionPerformed(ActionEvent ae) {
         String value1 = text1.getText();
         String value2 = text2.getText();
 
         String token = ApiConnector.authenticate(value1, value2);
 
-        if (token!=null) {
+        if (token != null) {
             Preferences prefs = Preferences.userNodeForPackage(getClass());
-            prefs.put("token", "token");
-            JOptionPane.showMessageDialog(this, token,
-                    "Success in login", JOptionPane.INFORMATION_MESSAGE);
-
+            prefs.put("token", token);
+            DashboardScreen frame = new DashboardScreen();
+            frame.setSize(800, 200);
+            frame.setVisible(true);
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
         } else {
             System.out.println("enter the valid username and password");
-            JOptionPane.showMessageDialog(this, "Incorrect login or password, or server error",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Incorrect login or password, or server error", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
