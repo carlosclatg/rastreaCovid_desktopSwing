@@ -11,14 +11,11 @@ import java.awt.event.WindowListener;
 import java.util.prefs.Preferences;
 
 public class LoginForm extends JFrame implements ActionListener, WindowListener {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     JButton SUBMIT;
     JPanel panel;
     JLabel label1, label2;
     final JTextField text1, text2;
+    String token;
 
     public LoginForm() {
         label1 = new JLabel();
@@ -42,6 +39,7 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
         setTitle("LOGIN FORM");
     }
 
+
     public void actionPerformed(ActionEvent ae) {
         String value1 = text1.getText();
         String value2 = text2.getText();
@@ -62,6 +60,7 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     @Override
     public void windowOpened(WindowEvent windowEvent) {
@@ -96,5 +95,45 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
     @Override
     public void windowDeactivated(WindowEvent windowEvent) {
 
+    }
+
+
+    public JButton getSUBMIT() {
+        return SUBMIT;
+    }
+
+
+    public void setSUBMIT(JButton sUBMIT) {
+        SUBMIT = sUBMIT;
+    }
+
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+
+
+    public JTextField getText1() {
+        return text1;
+    }
+
+
+    public JTextField getText2() {
+        return text2;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

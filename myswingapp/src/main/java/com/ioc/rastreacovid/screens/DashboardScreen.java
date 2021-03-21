@@ -79,4 +79,12 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
     }
+
+    public JButton getLogoutButton() {
+        return logoutButton;
+    }
+
+    public void setLogoutButton(JButton logoutButton) {
+        this.logoutButton = logoutButton;
+    }
 }

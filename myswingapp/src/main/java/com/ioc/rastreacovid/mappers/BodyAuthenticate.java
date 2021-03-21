@@ -1,8 +1,18 @@
 package com.ioc.rastreacovid.mappers;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class BodyAuthenticate {
     String email;
     String password;
+
     public String getEmail() {
         return this.email;
     }
@@ -18,6 +28,5 @@ public class BodyAuthenticate {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
-
-
