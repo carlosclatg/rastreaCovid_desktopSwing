@@ -23,7 +23,7 @@ public class AppTest
         LoginForm frame = new LoginForm();
         frame.setSize(400,200);
         frame.setVisible(true);
-        frame.getText1().setText("victorcapilladeveloper@gmail.com");
+        frame.getText1().setText("m.rocio.b.f@gmail.com");
         frame.getText2().setText("Abcd1234");
         frame.getSUBMIT().doClick();
     }
@@ -45,8 +45,8 @@ public class AppTest
         LoginForm frame = new LoginForm();
         frame.setSize(400,200);
         frame.setVisible(true);
-        frame.getText1().setText("testfalse@gmail.com");
-        frame.getText2().setText("Abcd1234");
+        frame.getText1().setText("m.rocio.b.f@gmail.com");
+        frame.getText2().setText("12345");
         frame.getSUBMIT().doClick();
     }
 
@@ -57,7 +57,29 @@ public class AppTest
         frame.setSize(400,200);
         frame.setVisible(true);
         frame.getText1().setText("testfalse@gmail.com");
-        frame.getText2().setText("Abcd1234");
+        frame.getText2().setText("12345");
+        frame.getSUBMIT().doClick();
+    }
+
+    @Test 
+    public void loginTestNullEmail()
+    {
+        LoginForm frame = new LoginForm();
+        frame.setSize(400,200);
+        frame.setVisible(true);
+        frame.getText1().setText("");
+        frame.getText2().setText("12345");
+        frame.getSUBMIT().doClick();
+    }
+
+    @Test 
+    public void loginTestNullPassword()
+    {
+        LoginForm frame = new LoginForm();
+        frame.setSize(400,200);
+        frame.setVisible(true);
+        frame.getText1().setText("m.rocio.b.f@gmail.com");
+        frame.getText2().setText("");
         frame.getSUBMIT().doClick();
     }
 
@@ -67,7 +89,7 @@ public class AppTest
         LoginForm frame = new LoginForm();
         frame.setSize(400,200);
         frame.setVisible(true);
-        frame.getText1().setText("victorcapilladeveloper@gmail.com");
+        frame.getText1().setText("m.rocio.b.f@gmail.com");
         frame.getText2().setText("Abcd1234");
         frame.getSUBMIT().doClick();
         frame.getToken();
