@@ -2,17 +2,22 @@ package com.ioc.rastreacovid.communication;
 
 import com.google.gson.Gson;
 import com.ioc.rastreacovid.mappers.BodyAuthenticate;
+import com.ioc.rastreacovid.mappers.Patient;
 import com.ioc.rastreacovid.mappers.Token;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 
 public class ApiConnector {
 
     private static final String URL = "http://localhost:8080/api";
     private static final String URL_auth = URL + "/user/auth";
+    private static final String URL_getAllPatients = URL + "/pacients";
+
 
     public static String authenticate(String email, String pass) {
 
@@ -54,6 +59,38 @@ public class ApiConnector {
             return null;
         }
         return null;
+    }
+
+    public static List<Patient> getAllPatients(String token){
+        try{
+            System.out.println(URL_getAllPatients);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(URL_getAllPatients))
+                    .header("Content-Type", "application/json")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+            HttpResponse<String> response = HttpClient
+                    .newBuilder()
+                    .build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.statusCode());
+
+            switch (response.statusCode()) {
+                case (200):
+                    Gson g = new Gson();
+                    Patient[] p = g.fromJson(response.body(), Patient[].class);
+                    return Arrays.asList(p);
+                default:
+                    return null;
+            }
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
 }

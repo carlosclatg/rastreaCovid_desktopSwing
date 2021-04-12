@@ -36,6 +36,13 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
         JButton pacientsButton = new JButton("Pacients");
         pacientsButton.setBounds(29, 76, 170, 70);
         panel.add(pacientsButton);
+        pacientsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PatientsScreen screen = new PatientsScreen();
+                screen.getFrame().setVisible(true);
+            }
+        });
  
 
         JLabel tokenLabel = new JLabel();
