@@ -3,6 +3,7 @@ package com.ioc.rastreacovid.communication;
 import com.google.gson.Gson;
 import com.ioc.rastreacovid.mappers.BodyAuthenticate;
 import com.ioc.rastreacovid.mappers.Patient;
+import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.mappers.Token;
 
 import java.net.URI;
@@ -17,6 +18,7 @@ public class ApiConnector {
     private static final String URL = "http://localhost:8080/api";
     private static final String URL_auth = URL + "/user/auth";
     private static final String URL_getAllPatients = URL + "/pacients";
+    private static final String URL_getPatientById = URL + "/pacient/";
 
 
     public static String authenticate(String email, String pass) {
@@ -82,6 +84,37 @@ public class ApiConnector {
                     Gson g = new Gson();
                     Patient[] p = g.fromJson(response.body(), Patient[].class);
                     return Arrays.asList(p);
+                default:
+                    return null;
+            }
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+
+    public static PatientDetail getPacientById(String token, String id){
+        try{
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(URL_getPatientById + id))
+                    .header("Content-Type", "application/json")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+            HttpResponse<String> response = HttpClient
+                    .newBuilder()
+                    .build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+            switch (response.statusCode()) {
+                case (200):
+                    Gson g = new Gson();
+                    return g.fromJson(response.body(), PatientDetail.class);
                 default:
                     return null;
             }

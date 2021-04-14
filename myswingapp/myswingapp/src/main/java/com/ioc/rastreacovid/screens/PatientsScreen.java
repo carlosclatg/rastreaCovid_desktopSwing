@@ -47,6 +47,7 @@ public class PatientsScreen {
 		String token = prefs.get("token", "token");
 
 		Vector columnNames =  new Vector();
+		columnNames.add("_id");
 		columnNames.add("name");
 		columnNames.add("surname");
 		columnNames.add("phone");
@@ -60,10 +61,11 @@ public class PatientsScreen {
 
 		List<Patient> patients = ApiConnector.getAllPatients(token);
 
-		patients.forEach(x -> System.out.println(x.toString()) );
+
 
 		patients.forEach(p -> {
 			Vector<Object> row= new Vector<Object>();
+			row.add(p.get_id());
 			row.add(p.getName());
 			row.add(p.getSurname());
 			row.add(p.getPhone());
@@ -85,7 +87,10 @@ public class PatientsScreen {
 				int row = table.rowAtPoint(point);
 				//si haces 2xclick
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-					System.out.println("Aqui llamar a la API para traer detalles de paciente.");
+					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
+					String token = prefs.get("token", "token");
+					System.out.println(token);
+					System.out.println(ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
 				}
 			}
 		});
