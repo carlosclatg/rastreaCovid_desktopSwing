@@ -1,0 +1,15 @@
+com/ioc/rastreacovid/screens/DashboardScreen.class
+com/ioc/rastreacovid/screens/DashboardScreen$1.class
+com/ioc/rastreacovid/mappers/Contact.class
+com/ioc/rastreacovid/screens/UserScreen$1.class
+com/ioc/rastreacovid/mappers/Token.class
+com/ioc/rastreacovid/screens/LoginForm.class
+com/ioc/rastreacovid/mappers/Sintom.class
+com/ioc/rastreacovid/mappers/Patient.class
+com/ioc/rastreacovid/screens/PatientsScreen.class
+com/ioc/rastreacovid/mappers/BodyAuthenticate.class
+com/ioc/rastreacovid/screens/PatientsScreen$1.class
+com/ioc/rastreacovid/mappers/PatientDetail.class
+com/ioc/rastreacovid/App.class
+com/ioc/rastreacovid/communication/ApiConnector.class
+com/ioc/rastreacovid/screens/UserScreen.class

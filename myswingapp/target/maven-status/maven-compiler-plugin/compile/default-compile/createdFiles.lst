@@ -1,0 +1,6 @@
+com/ioc/rastreacovid/App.class
+com/ioc/rastreacovid/mappers/Token.class
+com/ioc/rastreacovid/screens/LoginForm.class
+com/ioc/rastreacovid/screens/DashboardScreen.class
+com/ioc/rastreacovid/communication/ApiConnector.class
+com/ioc/rastreacovid/mappers/BodyAuthenticate.class
