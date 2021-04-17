@@ -84,7 +84,7 @@ public class PatientsScreen {
 					String token = prefs.get("token", "token");
 					System.out.println(token);
 					System.out.println(
-							ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
+					ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
 				}
 			}
 		});

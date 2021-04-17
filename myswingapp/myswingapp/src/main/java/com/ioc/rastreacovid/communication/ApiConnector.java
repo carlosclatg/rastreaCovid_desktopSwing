@@ -115,7 +115,7 @@ public class ApiConnector {
             switch (response.statusCode()) {
                 case (200):
                     Gson g = new Gson();
-                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail[].class));
+                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail.class));
                 	pds.getFrame().setVisible(true);
                     return g.fromJson(response.body(), PatientDetail[].class);
                 default:

@@ -52,7 +52,7 @@ public class PatientDetailsScreen {
 	/**
 	 * Create the application.
 	 */
-	public PatientDetailsScreen(PatientDetail[] patientdetail) {
+	public PatientDetailsScreen(PatientDetail patientdetail) {
 		initialize(patientdetail);
 	}
 
@@ -61,7 +61,7 @@ public class PatientDetailsScreen {
 	 * 
 	 * @param patientdetail
 	 */
-	public void initialize(PatientDetail[] patientdetail) {
+	public void initialize(PatientDetail patientdetail) {
 		frmDetailPacient = new JFrame();
 		frmDetailPacient.getContentPane().setBackground(new Color(92, 255, 208));
 		frmDetailPacient.setBounds(100, 100, 1000, 500);
@@ -79,7 +79,7 @@ public class PatientDetailsScreen {
 		name.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		JTextField namep = new JTextField();
 		namep.setBounds(120, 10, 150, 20);
-		namep.setText(patientdetail[0].getName());
+		namep.setText(patientdetail.getName());
 		namep.setEditable(false);
 		namep.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		namep.setBackground(new Color(92, 255, 208));
@@ -91,7 +91,7 @@ public class PatientDetailsScreen {
 
 		JTextField surnamep = new JTextField();
 		surnamep.setBounds(120, 10, 150, 20);
-		surnamep.setText(patientdetail[0].getSurname());
+		surnamep.setText(patientdetail.getSurname());
 		surnamep.setEditable(false);
 		surnamep.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		surnamep.setBackground(new Color(92, 255, 208));
@@ -102,7 +102,7 @@ public class PatientDetailsScreen {
 		this.getFrame().add(surnamep);
 
 		// Mirem tots el simptomes que té el pacient i els mostrem amb un while
-		int nsintoms = patientdetail[0].getSintoms().size();
+		int nsintoms = patientdetail.getSintoms().size();
 		int counter = 0;
 
 		while (counter < nsintoms) {
@@ -111,7 +111,7 @@ public class PatientDetailsScreen {
 			sintom.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 			JTextField sintomp = new JTextField();
 			sintomp.setBounds(120, 10, 150, 20);
-			sintomp.setText(patientdetail[0].getSintoms().get(counter).getSintoma_cat());
+			sintomp.setText(patientdetail.getSintoms().get(counter).getSintoma_cat());
 			sintomp.setEditable(false);
 			sintomp.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 			sintomp.setBackground(new Color(92, 255, 208));
@@ -123,7 +123,7 @@ public class PatientDetailsScreen {
 		}
 		
 		// Mirem tots el contactes que té el pacient i els mostrem amb un while
-		int ncontacts = patientdetail[0].getContacts().size();
+		int ncontacts = patientdetail.getContacts().size();
 		int counter2 = 0;
 		
 		while (counter2 < ncontacts) {
@@ -133,7 +133,7 @@ public class PatientDetailsScreen {
 			contact.setVisible(true);
 			JTextField contactp = new JTextField();
 			contactp.setBounds(120, 10, 150, 20);
-			contactp.setText(patientdetail[0].getContacts().get(counter2).getName());
+			contactp.setText(patientdetail.getContacts().get(counter2).getName());
 			contactp.setEditable(false);
 			contactp.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 			contactp.setBackground(new Color(92, 255, 208));
