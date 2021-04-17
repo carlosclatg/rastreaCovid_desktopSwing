@@ -13,7 +13,79 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class PatientDetail {
-    List<Contact> contacts;
+    public List<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
+	}
+
+	public List<Sintom> getSintoms() {
+		return sintoms;
+	}
+
+	public void setSintoms(List<Sintom> sintoms) {
+		this.sintoms = sintoms;
+	}
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public Integer getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Integer phone) {
+		this.phone = phone;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public Date getPCRDate() {
+		return PCRDate;
+	}
+
+	public void setPCRDate(Date pCRDate) {
+		PCRDate = pCRDate;
+	}
+
+	public String getCreatedby() {
+		return createdby;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
+	List<Contact> contacts;
     List<Sintom> sintoms;
     String _id;
     String name;
@@ -26,9 +98,9 @@ public class PatientDetail {
     @Override
     public String toString() {
         return "PatientDetail{" +
-                "contacts=" + contacts +
+        		"_id='" + _id + '\'' +
+                ", contacts=" + contacts +
                 ", sintoms=" + sintoms +
-                ", _id='" + _id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phone=" + phone +
@@ -37,6 +109,5 @@ public class PatientDetail {
                 ", createdby='" + createdby + '\'' +
                 '}';
     }
-
 
 }

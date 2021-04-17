@@ -30,6 +30,7 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
         label2 = new JLabel();
         label2.setBackground(new Color(135, 206, 235));
         label2.setHorizontalAlignment(SwingConstants.RIGHT);
+        
         label2.setText("Password:");
         text2 = new JPasswordField(15);
         text2.setHorizontalAlignment(SwingConstants.CENTER);

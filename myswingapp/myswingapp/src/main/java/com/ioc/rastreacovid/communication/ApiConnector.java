@@ -5,6 +5,7 @@ import com.ioc.rastreacovid.mappers.BodyAuthenticate;
 import com.ioc.rastreacovid.mappers.Patient;
 import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.mappers.Token;
+import com.ioc.rastreacovid.screens.PatientDetailsScreen;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -96,7 +97,7 @@ public class ApiConnector {
     }
 
 
-    public static PatientDetail getPacientById(String token, String id){
+    public static PatientDetail[] getPacientById(String token, String id){
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(URL_getPatientById + id))
@@ -114,7 +115,9 @@ public class ApiConnector {
             switch (response.statusCode()) {
                 case (200):
                     Gson g = new Gson();
-                    return g.fromJson(response.body(), PatientDetail.class);
+                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail[].class));
+                	pds.getFrame().setVisible(true);
+                    return g.fromJson(response.body(), PatientDetail[].class);
                 default:
                     return null;
             }

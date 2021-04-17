@@ -16,11 +16,10 @@ import java.util.prefs.Preferences;
 
 import javax.swing.*;
 
-
 @Getter
 @Setter
 public class PatientsScreen {
-	
+
 	private JFrame frame;
 	private Panel panel;
 	private JTextField txtLlistatPacients;
@@ -39,32 +38,29 @@ public class PatientsScreen {
 	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
-		frame.setBounds(100, 100, 500, 500);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Dispose on close, otherwise closes all the app
+		frame.setBounds(100, 100, 1050, 500);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 
 		frame.setTitle("Llista de pacients");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
 
-		Vector columnNames =  new Vector();
-		columnNames.add("_id");
-		columnNames.add("name");
-		columnNames.add("surname");
-		columnNames.add("phone");
-		columnNames.add("birthdate");
-		columnNames.add("PCR");
-		columnNames.add("number of contacts");
-		columnNames.add("number of symptoms");
-
+		Vector columnNames = new Vector();
+		columnNames.add("ID");
+		columnNames.add("Nom");
+		columnNames.add("Cognom");
+		columnNames.add("Tlf");
+		columnNames.add("Data Naixament");
+		columnNames.add("Data PCR");
+		columnNames.add("Nº de Contacts");
+		columnNames.add("Nº de Símptones");
 
 		Vector fileVector = new Vector();
 
 		List<Patient> patients = ApiConnector.getAllPatients(token);
 
-
-
 		patients.forEach(p -> {
-			Vector<Object> row= new Vector<Object>();
+			Vector<Object> row = new Vector<Object>();
 			row.add(p.get_id());
 			row.add(p.getName());
 			row.add(p.getSurname());
@@ -76,35 +72,45 @@ public class PatientsScreen {
 			fileVector.add(row);
 		});
 
-
-
-		JTable jTable = new JTable(fileVector, columnNames);
-
-		jTable.addMouseListener(new MouseAdapter() {
+		JTable table = new JTable(fileVector, columnNames);
+		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
-				JTable table =(JTable) mouseEvent.getSource();
+				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
-				//si haces 2xclick
+				// if you double click it shows the symptoms
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
 					System.out.println(token);
-					System.out.println(ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
+					System.out.println(
+							ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
 				}
 			}
 		});
-		jTable.setDefaultEditor(Object.class, null);
-		JScrollPane jScrollPane = new JScrollPane(jTable);
+
+		table.setDefaultEditor(Object.class, null);
+		table.setShowGrid(false);
+		table.setShowHorizontalLines(true);
+		table.setGridColor(Color.cyan);
+		table.setShowVerticalLines(true);
+		table.setGridColor(Color.cyan);
+		table.setSelectionBackground(Color.blue);
+		JScrollPane jScrollPane = new JScrollPane(table);
 		jScrollPane.setVisible(true);
 
 		this.getFrame().add(jScrollPane);
-		
-		btnEnrere = new JButton("Enrere");
-		btnEnrere.setBounds(50, 50, 50, 50);
-		frame.getContentPane().add(btnEnrere, BorderLayout.SOUTH);
-	
-		
+
+		// TODO
+		/*
+		 * btnEnrere = new JButton("Enrere"); btnEnrere.setBounds(50, 50, 50, 50);
+		 * frame.getContentPane().add(btnEnrere, BorderLayout.SOUTH);
+		 */
+
+	}
+
+	public Window getFrame() {
+		return frame;
 	}
 
 }
