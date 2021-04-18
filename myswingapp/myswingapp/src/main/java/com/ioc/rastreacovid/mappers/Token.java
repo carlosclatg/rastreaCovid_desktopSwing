@@ -9,14 +9,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Token {
-    String token;
-    
-    public String getToken() {
-        return this.token;
-    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//We set and get the information from the token
+
+public class Token {
+	String token;
+
+	public String getToken() {
+		return this.token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 }

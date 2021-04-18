@@ -9,11 +9,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+
+// We set and get information about the symptoms and then display them
+// Generation of getters & setters
+
 public class Sintom {
-    String _id;
-    String sintoma_cat;
-    String sintoma_es;
-    public String get_id() {
+	String _id;
+	String sintoma_cat;
+	String sintoma_es;
+
+	public String get_id() {
 		return _id;
 	}
 
@@ -47,13 +52,9 @@ public class Sintom {
 
 	String sintoma_eng;
 
-    @Override
-    public String toString() {
-        return "Sintom{" +
-                "_id='" + _id + '\'' +
-                ", sintoma_cat='" + sintoma_cat + '\'' +
-                ", sintoma_es='" + sintoma_es + '\'' +
-                ", sintoma_eng='" + sintoma_eng + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Sintom{" + "_id='" + _id + '\'' + ", sintoma_cat='" + sintoma_cat + '\'' + ", sintoma_es='" + sintoma_es
+				+ '\'' + ", sintoma_eng='" + sintoma_eng + '\'' + '}';
+	}
 }

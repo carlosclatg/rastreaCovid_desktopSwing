@@ -9,9 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+
+// In this class we start all the data we need from the contacts, so that we can later display them with information
+// Generation of getters & setters
+
 public class Contact {
-    String _id;
-    public String get_id() {
+	String _id;
+
+	public String get_id() {
 		return _id;
 	}
 
@@ -19,41 +24,36 @@ public class Contact {
 		this._id = _id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNamec() {
+		return namec;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNamec(String namec) {
+		this.namec = namec;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getSurnamec() {
+		return surnamec;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setSurnamec(String surnamec) {
+		this.surnamec = surnamec;
 	}
 
-	public Integer getPhone() {
-		return phone;
+	public Integer getPhonec() {
+		return phonec;
 	}
 
-	public void setPhone(Integer phone) {
-		this.phone = phone;
+	public void setPhonec(Integer phonec) {
+		this.phonec = phonec;
 	}
 
-	String name;
-    String surname;
-    Integer phone;
+	String namec;
+	String surnamec;
+	Integer phonec;
 
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "_id='" + _id + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phone=" + phone +
-                '}';
-    }
+	public String toString2() {
+		return "Contact{" + "_id='" + _id + '\'' + ", namec='" + namec + '\'' + ", surnamec='" + surnamec + '\''
+				+ ", phonec=" + phonec + '}';
+	}
 }

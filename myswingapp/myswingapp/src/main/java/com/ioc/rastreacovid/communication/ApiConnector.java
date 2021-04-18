@@ -14,14 +14,19 @@ import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
 
+
+//Class to manage the API connection//
 public class ApiConnector {
 
     private static final String URL = "http://localhost:8080/api";
     private static final String URL_auth = URL + "/user/auth";
     private static final String URL_getAllPatients = URL + "/pacients";
     private static final String URL_getPatientById = URL + "/pacient/";
+   // private static final String URL_getContactsByPacientId = URL + "/contacts/";
+ 
+    
 
-
+    //In this method we check and validate that the access is correct with the user and password, we obtain the token
     public static String authenticate(String email, String pass) {
 
         String token;
@@ -64,6 +69,7 @@ public class ApiConnector {
         return null;
     }
 
+    //Method to obtain the patients that are in the DB.
     public static List<Patient> getAllPatients(String token){
         try{
             System.out.println(URL_getAllPatients);
@@ -96,7 +102,7 @@ public class ApiConnector {
 
     }
 
-
+  //Method to obtain the details of the patients that are in the DB.
     public static PatientDetail[] getPacientById(String token, String id){
         try{
             HttpRequest request = HttpRequest.newBuilder()
@@ -115,7 +121,7 @@ public class ApiConnector {
             switch (response.statusCode()) {
                 case (200):
                     Gson g = new Gson();
-                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail.class));
+                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail[].class));
                 	pds.getFrame().setVisible(true);
                     return g.fromJson(response.body(), PatientDetail[].class);
                 default:
@@ -128,5 +134,40 @@ public class ApiConnector {
         }
 
     }
+  //Method to obtain the contacts of the patients that are in the DB.
+   /* public static PatientDetail[] getContactsByPacientId(String token, String id){
+        try{
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(URL_getContactsByPacientId + id))
+                    .header("Content-Type", "application/json")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+            HttpResponse<String> response = HttpClient
+                    .newBuilder()
+                    .build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+            switch (response.statusCode()) {
+                case (200):
+                    Gson g = new Gson();
+                	PatientDetailsScreen pds = new PatientDetailsScreen(g.fromJson(response.body(), PatientDetail[].class));
+                	pds.getFrame().setVisible(true);
+                    return g.fromJson(response.body(), PatientDetail[].class);
+                default:
+                    return null;
+            }
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+    */
+    
+    
 
 }
