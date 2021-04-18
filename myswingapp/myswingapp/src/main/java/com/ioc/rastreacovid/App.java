@@ -12,7 +12,7 @@ import com.ioc.rastreacovid.screens.LoginForm;
 public class App {
 	public static void main(String[] args) {
 
-		System.out.println("Hello World!");
+		System.out.println("Benvingut a l'aplicació versió escriptori de RastreaCovid");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "0");
 		if (token == "0" || token.equals("token")) {
