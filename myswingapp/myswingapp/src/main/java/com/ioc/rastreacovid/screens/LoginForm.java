@@ -21,6 +21,7 @@ public class LoginForm extends JFrame implements ActionListener, WindowListener 
 	String token;
 
 	// Design and logic of the login window.
+	// This version of the application, the desktop version, is only oriented to the administrator, so the user type will always be admin.
 	public LoginForm() {
 		getContentPane().setBackground(new Color(92, 255, 208));
 		setBackground(new Color(92, 255, 208));
