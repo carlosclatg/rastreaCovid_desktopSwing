@@ -161,9 +161,9 @@ public class AppTest
         frame3.setSize(1050, 500);
         frame3.setVisible(true);
         JTable table = frame3.getTable();
-        PatientDetail[] pacient = ApiConnector.getPacientById(token, (String) table.getValueAt(0, 0));
-        PatientDetailsScreen pds = new PatientDetailsScreen(pacient);
-        pds.setVisible(true);
+        PatientDetail detail = ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0));
+		PatientDetailsScreen pds = new PatientDetailsScreen(detail);
+		pds.getFrame().setVisible(true);
     }
 }
     

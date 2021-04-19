@@ -2,6 +2,8 @@ package com.ioc.rastreacovid.screens;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.Patient;
+import com.ioc.rastreacovid.mappers.PatientDetail;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -90,8 +92,9 @@ public class PatientsScreen {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
 					System.out.println(token);
-					System.out.println(
-							ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0)));
+					PatientDetail detail = ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0));
+					PatientDetailsScreen pds = new PatientDetailsScreen(detail);
+					pds.getFrame().setVisible(true);
 				}
 			}
 		});

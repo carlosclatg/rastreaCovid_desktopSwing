@@ -24,36 +24,37 @@ public class Contact {
 		this._id = _id;
 	}
 
-	public String getNamec() {
-		return namec;
+	public String getName() {
+		return name;
 	}
 
-	public void setNamec(String namec) {
-		this.namec = namec;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getSurnamec() {
-		return surnamec;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setSurnamec(String surnamec) {
-		this.surnamec = surnamec;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
-	public Integer getPhonec() {
-		return phonec;
+	public Integer getPhone() {
+		return phone;
 	}
 
-	public void setPhonec(Integer phonec) {
-		this.phonec = phonec;
+	public void setPhone(Integer phone) {
+		this.phone = phone;
 	}
 
-	String namec;
-	String surnamec;
-	Integer phonec;
+	String name;
+	String surname;
+	Integer phone;
 
-	public String toString2() {
-		return "Contact{" + "_id='" + _id + '\'' + ", namec='" + namec + '\'' + ", surnamec='" + surnamec + '\''
-				+ ", phonec=" + phonec + '}';
+	@Override
+	public String toString() {
+		return "Contact{" + "_id='" + _id + '\'' + ", name='" + name + '\'' + ", surname='" + surname + '\''
+				+ ", phone=" + phone + '}';
 	}
 }
