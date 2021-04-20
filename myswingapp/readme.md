@@ -6,10 +6,10 @@ _Desktop version of the Rastreacovid application for user management.
 # Structure:
 _Folder structure:
 _It has been divided into 4 main packages the "main", "communication", "mappers" and "screens".
-_1. Main: we place the main class to be able to run the app.
-_2. Communication: the class that handles the connection with the api.
-_3. Mappers: the files needed to map all the information we need to obtain and display.
-_4. Screens: the classes with the design and logic of the screens.
+_Main: we place the main class to be able to run the app.
+_Communication: the class that handles the connection with the api.
+_Mappers: the files needed to map all the information we need to obtain and display.
+_Screens: the classes with the design and logic of the screens.
 
 On the other side we have another folder where we have the AppTest.java, with the unit tests done.
 

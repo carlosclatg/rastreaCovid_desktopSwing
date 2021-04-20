@@ -15,7 +15,7 @@ import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.screens.DashboardScreen;
 import com.ioc.rastreacovid.screens.LoginForm;
 import com.ioc.rastreacovid.screens.PatientDetailsScreen;
-import com.ioc.rastreacovid.screens.PatientsScreen;
+import com.ioc.rastreacovid.screens.PatientScreen;
 
 import org.junit.Test;
 
@@ -135,7 +135,7 @@ public class AppTest
         //frame.setVisible(true); 
         frame2.getPacientsButton().doClick();
         
-        PatientsScreen frame3 = new PatientsScreen();
+        PatientScreen frame3 = new PatientScreen();
         frame3.setSize(1050, 500);
         frame3.setVisible(true);
         //frame.setVisible(true);  
@@ -157,7 +157,7 @@ public class AppTest
         frame2.setVisible(true);
         frame2.getPacientsButton().doClick();
         
-        PatientsScreen frame3 = new PatientsScreen();
+        PatientScreen frame3 = new PatientScreen();
         frame3.setSize(1050, 500);
         frame3.setVisible(true);
         JTable table = frame3.getTable();

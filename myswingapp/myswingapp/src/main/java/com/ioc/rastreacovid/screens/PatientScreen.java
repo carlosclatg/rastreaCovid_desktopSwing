@@ -23,7 +23,7 @@ import javax.swing.*;
 
 //In this class we design and apply logic to the patient window.
 
-public class PatientsScreen {
+public class PatientScreen {
 
 	private JFrame frame;
 	private Panel panel;
@@ -32,7 +32,7 @@ public class PatientsScreen {
 
 	// Create the application.
 
-	public PatientsScreen() {
+	public PatientScreen() {
 		initialize();
 	}
 

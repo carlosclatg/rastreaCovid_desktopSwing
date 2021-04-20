@@ -45,7 +45,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		pacientsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PatientsScreen screen = new PatientsScreen();
+				PatientScreen screen = new PatientScreen();
 				screen.getFrame().setVisible(true);
 			}
 		});
