@@ -2,7 +2,6 @@ package com.ioc.rastreacovid.communication;
 
 import com.google.gson.Gson;
 import com.ioc.rastreacovid.mappers.*;
-import com.ioc.rastreacovid.screens.PatientDetailsScreen;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,7 +19,8 @@ public class ApiConnector {
     private static final String URL_postPatient = URL + "/pacient";
     private static final String URL_getSintoms =  URL + "/sintoms/";
     private static final String URL_deletePatient =  URL + "/pacient/";
-
+    private static final String URL_getFrequency =  URL + "/stats-freq-sin/";
+    private static final String URL_getStats =  URL + "/stats";
 
 
     private static final String LANG_CAT = "cat";
@@ -33,6 +33,11 @@ public class ApiConnector {
         String token;
 
         try{
+            /**
+             *             HttpClient.newBuilder().
+             * https://stackoverflow.com/questions/50025086/in-java-what-is-the-simplest-way-to-create-an-sslcontext-with-just-a-pem-file
+             * https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/net/ssl/SSLContext.html
+             */
             BodyAuthenticate body = new BodyAuthenticate();
             body.setEmail(email);
             body.setPassword(pass);
@@ -103,6 +108,7 @@ public class ApiConnector {
 
     public static PatientDetail getPacientById(String token, String id){
         try{
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(URL_getPatientById + id))
                     .header("Content-Type", "application/json")
@@ -238,6 +244,66 @@ public class ApiConnector {
             return null;
         }
 
+    }
+
+
+    public static List<CountSintom> getFrequency(String token, String lang){ //lang puede ser cat, eng o es dependiendo del idioma de la app. Por defecto cat.
+        try{
+            if(lang == null) lang = LANG_CAT;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(URL_getFrequency + lang))
+                    .header("Content-Type", "application/json")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+            HttpResponse<String> response = HttpClient
+                    .newBuilder()
+                    .build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+            switch (response.statusCode()) {
+                case (200):
+                    Gson g = new Gson();
+                    return Arrays.asList(g.fromJson(response.body(), CountSintom[].class));
+                default:
+                    return null;
+            }
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public static List<Stats> getStats(String token){ //lang puede ser cat, eng o es dependiendo del idioma de la app. Por defecto cat.
+        try{
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(URL_getStats))
+                    .header("Content-Type", "application/json")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+            HttpResponse<String> response = HttpClient
+                    .newBuilder()
+                    .build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+            switch (response.statusCode()) {
+                case (200):
+                    Gson g = new Gson();
+                    return Arrays.asList(g.fromJson(response.body(), Stats[].class));
+                default:
+                    return null;
+            }
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
 

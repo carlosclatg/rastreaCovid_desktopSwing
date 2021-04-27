@@ -1,13 +1,25 @@
 package com.ioc.rastreacovid.screens;
 
-import java.util.prefs.Preferences;
+import com.ioc.rastreacovid.communication.ApiConnector;
+import com.ioc.rastreacovid.mappers.CountSintom;
+import com.ioc.rastreacovid.mappers.Stats;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYDataset;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.*;
-import javax.swing.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.prefs.Preferences;
 public class DashboardScreen extends JFrame implements ActionListener, WindowListener {
     /**
      *
@@ -39,11 +51,23 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
         pacientsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PatientsScreen screen = new PatientsScreen();
-                screen.getFrame().setVisible(true);
+                //PatientsScreen screen = new PatientsScreen();
+                //screen.getFrame().setVisible(true);
+
+                JFrame frame = new JFrame("Charts");
+
+                frame.setSize(600, 400);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setVisible(true);
+
+
+                //generatefrequencySintoms(frame, token);
+                //generateStatsSintoms(frame, token);
+                generateStatsPacients(frame, token);
+
             }
         });
- 
+
 
         JLabel tokenLabel = new JLabel();
         tokenLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
@@ -52,6 +76,54 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
         tokenLabel.setText(token);
         panel.add(tokenLabel);
         
+    }
+
+    private void generatefrequencySintoms(JFrame frame, String token) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        System.out.println("g");
+        List<CountSintom> countSintomList = ApiConnector.getFrequency(token, "cat");
+
+        if(countSintomList != null && countSintomList.size() > 0){
+            countSintomList.forEach(x ->{
+                dataset.addValue(x.getCount(), "sintoma", x.get_id());
+            });
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart("Sintoms", "sintomas", "frequency", dataset);
+        ChartPanel cp = new ChartPanel(chart);
+        frame.getContentPane().add(cp);
+
+
+    }
+
+    private void generateStatsSintoms(JFrame frame, String token) {
+        List<Stats> stats = ApiConnector.getStats(token);
+        if(stats !=null && stats.size() > 0){
+            HistogramDataset dataset = new HistogramDataset();
+            List<Double> listsintoms = new ArrayList<Double>();
+            stats.forEach(x-> {
+                listsintoms.add(x.getNsintoms().doubleValue());
+            });
+            dataset.addSeries("number of sintoms", listsintoms.stream().mapToDouble(Double::doubleValue).toArray(), 20);
+            JFreeChart chart = ChartFactory.createHistogram("Number of sintoms", "number of sintoms", "number of patients", dataset);
+            ChartPanel cp = new ChartPanel(chart);
+            frame.getContentPane().add(cp);
+        }
+    }
+
+    private void generateStatsPacients(JFrame frame, String token) {
+        List<Stats> stats = ApiConnector.getStats(token);
+        if(stats !=null && stats.size() > 0){
+            HistogramDataset dataset = new HistogramDataset();
+            List<Double> listcontacts = new ArrayList<Double>();
+            stats.forEach(x-> {
+                listcontacts.add(x.getNcontacts().doubleValue());
+            });
+            dataset.addSeries("number of contacts", listcontacts.stream().mapToDouble(Double::doubleValue).toArray(), 20);
+            JFreeChart chart = ChartFactory.createHistogram("Number of contacts", "number of contacts", "number of patients", dataset);
+            ChartPanel cp = new ChartPanel(chart);
+            frame.getContentPane().add(cp);
+        }
     }
 
     @Override
@@ -134,6 +206,18 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
   //TO DO
     public void setpacientsButton(JButton pactientsButton) {
     }
-    
+
+
+
+    private static XYDataset createDataset() {
+
+        DefaultXYDataset ds = new DefaultXYDataset();
+
+        double[][] data = { {0.1, 0.2, 0.3}, {1, 2, 3} };
+
+        ds.addSeries("series1", data);
+
+        return ds;
+    }
 }
 
