@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+
 import java.awt.Panel;
 
 public class UserScreen {
@@ -64,6 +66,11 @@ public class UserScreen {
 	public void setVisible(boolean b) {
 		// TODO Esbozo de método generado automáticamente
 		
+	}
+
+	public JComponent getFrame() {
+		// TODO Esbozo de método generado automáticamente
+		return null;
 	}
 
 }

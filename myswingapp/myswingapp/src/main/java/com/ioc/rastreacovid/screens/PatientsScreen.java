@@ -3,6 +3,7 @@ package com.ioc.rastreacovid.screens;
 import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.Patient;
 import com.ioc.rastreacovid.mappers.PatientDetail;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,23 +20,24 @@ import javax.swing.*;
 
 @Getter
 @Setter
+
+//In this class we design and apply logic to the patient window.
+
 public class PatientsScreen {
 
 	private JFrame frame;
 	private Panel panel;
 	private JTextField txtLlistatPacients;
-	private JButton btnEnrere;
+	private JTable table;
 
-	/**
-	 * Create the application.
-	 */
+	// Create the application.
+
 	public PatientsScreen() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	// Initialize the contents of the frame.
+
 	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
@@ -46,6 +48,9 @@ public class PatientsScreen {
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
 
+		// We will display the patients in a list with the columns corresponding to the
+		// information we need
+		// Define the columns
 		Vector columnNames = new Vector();
 		columnNames.add("ID");
 		columnNames.add("Nom");
@@ -53,12 +58,14 @@ public class PatientsScreen {
 		columnNames.add("Tlf");
 		columnNames.add("Data Naixament");
 		columnNames.add("Data PCR");
-		columnNames.add("Nº de Contacts");
+		columnNames.add("Nº de Contactes");
 		columnNames.add("Nº de Símptones");
 
 		Vector fileVector = new Vector();
 
+		// Consult the existing patients and list them with columns
 		List<Patient> patients = ApiConnector.getAllPatients(token);
+		System.out.println(patients.size());
 
 		patients.forEach(p -> {
 			Vector<Object> row = new Vector<Object>();
@@ -73,13 +80,14 @@ public class PatientsScreen {
 			fileVector.add(row);
 		});
 
-		JTable table = new JTable(fileVector, columnNames);
+		// Define the table
+		table = new JTable(fileVector, columnNames);
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
-				// if you double click it shows the symptoms
+				// If you double click it shows the symptoms in the new window
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
@@ -91,6 +99,7 @@ public class PatientsScreen {
 			}
 		});
 
+		// We define the table format
 		table.setDefaultEditor(Object.class, null);
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(true);
@@ -102,17 +111,25 @@ public class PatientsScreen {
 		jScrollPane.setVisible(true);
 
 		this.getFrame().add(jScrollPane);
+	}
 
-		// TODO
-		/*
-		 * btnEnrere = new JButton("Enrere"); btnEnrere.setBounds(50, 50, 50, 50);
-		 * frame.getContentPane().add(btnEnrere, BorderLayout.SOUTH);
-		 */
+	// Generation of getters & setters
+	public JTable getTable() {
+		return table;
+	}
 
+	public void setTable(JTable table) {
+		this.table = table;
 	}
 
 	public Window getFrame() {
 		return frame;
+	}
+
+	public void setSize(int i, int j) {
+	}
+
+	public void setVisible(boolean b) {
 	}
 
 }

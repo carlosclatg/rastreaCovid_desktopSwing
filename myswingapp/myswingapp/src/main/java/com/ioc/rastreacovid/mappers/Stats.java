@@ -11,5 +11,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Stats {
     Integer nsintoms;
-    Integer ncontacts;
+    public Integer getNsintoms() {
+		return nsintoms;
+	}
+	public void setNsintoms(Integer nsintoms) {
+		this.nsintoms = nsintoms;
+	}
+	public Integer getNcontacts() {
+		return ncontacts;
+	}
+	public void setNcontacts(Integer ncontacts) {
+		this.ncontacts = ncontacts;
+	}
+	Integer ncontacts;
 }

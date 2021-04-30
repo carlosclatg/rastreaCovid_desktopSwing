@@ -12,8 +12,12 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
+// We set and get information on patient details and then display them
+// Generation of getters & setters
+
 public class PatientDetail {
-    public List<Contact> getContacts() {
+	public List<Contact> getContacts() {
 		return contacts;
 	}
 
@@ -85,29 +89,32 @@ public class PatientDetail {
 		this.createdby = createdby;
 	}
 
+	// List the contact data
 	List<Contact> contacts;
-    List<Sintom> sintoms;
-    String _id;
-    String name;
-    String surname;
-    Integer phone;
-    Date birthdate;
-    Date PCRDate;
-    String createdby;
+	String namec;
+	String surnamec;
+	Integer phonec;
 
-    @Override
-    public String toString() {
-        return "PatientDetail{" +
-        		"_id='" + _id + '\'' +
-                ", contacts=" + contacts +
-                ", sintoms=" + sintoms +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phone=" + phone +
-                ", birthdate=" + birthdate +
-                ", PCRDate=" + PCRDate +
-                ", createdby='" + createdby + '\'' +
-                '}';
-    }
+	public String toString2() {
+		return "Contact{" + "_id='" + _id + '\'' + ", namec='" + namec + '\'' + ", surnamec='" + surnamec + '\''
+				+ ", phonec=" + phonec + '}';
+	}
+
+	// List contact symptoms
+	List<Sintom> sintoms;
+	String _id;
+	String name;
+	String surname;
+	Integer phone;
+	Date birthdate;
+	Date PCRDate;
+	String createdby;
+
+	@Override
+	public String toString() {
+		return "PatientDetail{" + "_id='" + _id + '\'' + ", contacts=" + contacts + ", sintoms=" + sintoms + ", name='"
+				+ name + '\'' + ", surname='" + surname + '\'' + ", phone=" + phone + ", birthdate=" + birthdate
+				+ ", PCRDate=" + PCRDate + ", createdby='" + createdby + '\'' + '}';
+	}
 
 }

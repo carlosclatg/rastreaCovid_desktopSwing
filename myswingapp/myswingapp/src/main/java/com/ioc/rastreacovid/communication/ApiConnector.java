@@ -2,6 +2,8 @@ package com.ioc.rastreacovid.communication;
 
 import com.google.gson.Gson;
 import com.ioc.rastreacovid.mappers.*;
+import com.ioc.rastreacovid.screens.PatientDetailsScreen;
+
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,6 +12,7 @@ import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
 
+//Class to manage the API connection//
 public class ApiConnector {
 
     private static final String URL = "http://localhost:8080/api";
@@ -28,7 +31,9 @@ public class ApiConnector {
     private static final String LANG_ENG = "eng";
 
 
-    public static String authenticate(String email, String pass) {
+	// In this method we check and validate that the access is correct with the user
+	// and password, we obtain the token
+	public static String authenticate(String email, String pass) {
 
         String token;
 
@@ -74,6 +79,7 @@ public class ApiConnector {
         return null;
     }
 
+	// Method to obtain the patients that are in the DB.
     public static List<Patient> getAllPatients(String token){
         try{
             System.out.println(URL_getAllPatients);
@@ -105,7 +111,8 @@ public class ApiConnector {
         }
 
     }
-
+    
+	// Method to obtain the details of the patients that are in the DB.
     public static PatientDetail getPacientById(String token, String id){
         try{
 
@@ -137,6 +144,9 @@ public class ApiConnector {
 
     }
 
+	// ** TODO NEXT SPRINT ** //
+
+	// Method for the creation of patients in the application.
     public static Id postPacient(String token, PatientPost patientPost){
         try{
             HttpRequest request = HttpRequest.newBuilder()
@@ -184,7 +194,10 @@ public class ApiConnector {
          */
     }
 
-    public static List<Sintom> getAllSintoms(String token, String lang){ //lang puede ser cat, eng o es dependiendo del idioma de la app. Por defecto cat.
+ // ** TODO NEXT SPRINT ** //
+
+ 	// lang can be cat, eng or es depending on the language of the app, by default cat.
+    public static List<Sintom> getAllSintoms(String token, String lang){ 
         try{
             if(lang == null) lang = LANG_CAT;
             HttpRequest request = HttpRequest.newBuilder()
@@ -214,8 +227,10 @@ public class ApiConnector {
         }
     }
 
+	// ** TODO NEXT SPRINT ** //
 
-    public static String deletePatient (String token, String pacientId){ //pacientid es el _id
+	// Method for delete of patients in the application.
+    public static String deletePatient (String token, String pacientId){ // pacientid is the _id
         try{
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -234,7 +249,7 @@ public class ApiConnector {
             switch (response.statusCode()) {
                 case (200):
                     Gson g = new Gson();
-                    return g.fromJson(response.body(), String.class); //Esto devuelve simplemente un ok.
+                    return g.fromJson(response.body(), String.class); // This will return an ok, when it has been removed.
                 default:
                     return null;
             }

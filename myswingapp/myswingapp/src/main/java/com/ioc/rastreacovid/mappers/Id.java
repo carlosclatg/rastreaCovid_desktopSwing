@@ -9,6 +9,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+
+//*** TODO NEXT SPRINT *** //
+
+// Generation of getters & setters
+
 public class Id {
-    String id;
+	String id;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

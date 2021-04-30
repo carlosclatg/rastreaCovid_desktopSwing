@@ -27,15 +27,14 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+//In this class we design and apply logic to the patient details window.
+
 public class PatientDetailsScreen {
 
 	private JFrame frmDetailPacient;
 	private JTextField textField;
 	private JLabel lblNewLabel;
 
-	/**
-	 * /** Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,15 +48,14 @@ public class PatientDetailsScreen {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+	// Create the application.
+
 	public PatientDetailsScreen(PatientDetail patientdetail) {
 		initialize(patientdetail);
 	}
 
+	// Initialize the contents of the frame.
 	/**
-	 * Initialize the contents of the frame.
 	 * 
 	 * @param patientdetail
 	 */
@@ -65,7 +63,8 @@ public class PatientDetailsScreen {
 		frmDetailPacient = new JFrame();
 		frmDetailPacient.getContentPane().setBackground(new Color(92, 255, 208));
 		frmDetailPacient.setBounds(100, 100, 1000, 500);
-		frmDetailPacient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
+		frmDetailPacient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all
+																			// the app
 
 		frmDetailPacient.setTitle("Detall del Pacient");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
@@ -73,7 +72,7 @@ public class PatientDetailsScreen {
 
 		frmDetailPacient.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		// Nom Pacient
+		// We show the "Nom" label and the patient's name
 		JLabel name = new JLabel("Nom:");
 		name.setBounds(10, 10, 100, 30);
 		name.setFont(new Font("Lucida Grande", Font.BOLD, 15));
@@ -84,7 +83,7 @@ public class PatientDetailsScreen {
 		namep.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		namep.setBackground(new Color(92, 255, 208));
 
-		// Cognom Pacient
+		// We show the "Cognom" label and the patient's surname.
 		JLabel surname = new JLabel("Cognom:");
 		surname.setBounds(10, 10, 100, 30);
 		surname.setFont(new Font("Lucida Grande", Font.BOLD, 15));
@@ -96,12 +95,13 @@ public class PatientDetailsScreen {
 		surnamep.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		surnamep.setBackground(new Color(92, 255, 208));
 
+		// Add the frame
 		this.getFrame().add(name);
 		this.getFrame().add(namep);
 		this.getFrame().add(surname);
 		this.getFrame().add(surnamep);
 
-		// Mirem tots el simptomes que té el pacient i els mostrem amb un while
+		// We look at all the symptoms that the patient has and show them with a while
 		int nsintoms = patientdetail.getSintoms().size();
 		int counter = 0;
 
@@ -121,11 +121,11 @@ public class PatientDetailsScreen {
 			this.getFrame().add(sintom);
 			this.getFrame().add(sintomp);
 		}
-		
-		// Mirem tots el contactes que té el pacient i els mostrem amb un while
+
+		// We look at all the contacts that the patient has and show them with a while.
 		int ncontacts = patientdetail.getContacts().size();
 		int counter2 = 0;
-		
+
 		while (counter2 < ncontacts) {
 			JLabel contact = new JLabel("Contacte" + " " + (counter2 + 1) + ":");
 			contact.setBounds(10, 10, 100, 30);
@@ -148,5 +148,11 @@ public class PatientDetailsScreen {
 
 	public Window getFrame() {
 		return frmDetailPacient;
+	}
+
+	public void setSize(int i, int j) {
+	}
+
+	public void setVisible(boolean b) {
 	}
 }
