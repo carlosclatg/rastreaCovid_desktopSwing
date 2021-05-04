@@ -24,6 +24,7 @@ public class ApiConnector {
 	private static final String URL_getFrequency = URL + "/stats-freq-sin/";
 	private static final String URL_getStats = URL + "/stats";
 	private static final String URL_getUsers = URL + "/users/";
+	private static final String URL_postUser = URL + "/user/";
 	private static final String URL_retrieveUser = URL + "retrieve-user";
 
 	private static final String LANG_CAT = "cat";
@@ -161,29 +162,29 @@ public class ApiConnector {
 	
 	
 	// Method for the creation of users in the application.
-		public static Id retrieveUser(String token, User user) {
-			try {
-				HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_retrieveUser))
-						.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
-						.POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(user))).build();
-				HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-						HttpResponse.BodyHandlers.ofString());
+	public static UserPost createUser(String token, UserPost userpost) {
+		try {
+			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_postUser))
+					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
+					.POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(userpost))).build();
+			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+					HttpResponse.BodyHandlers.ofString());
 
-				System.out.println(response.statusCode());
-				System.out.println(response.body());
-				switch (response.statusCode()) {
-				case (200):
-					Gson g = new Gson();
-					return g.fromJson(response.body(), Id.class);
-				default:
-					return null;
-				}
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+			System.out.println(response.statusCode());
+			System.out.println(response.body());
+			switch (response.statusCode()) {
+			case (200):
+				Gson g = new Gson();
+				return g.fromJson(response.body(), UserPost.class);
+			default:
 				return null;
 			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
+	}
 
 	// Method for the creation of patients in the application.
 	public static Id postPacient(String token, PatientPost patientPost) {

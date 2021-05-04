@@ -1,7 +1,7 @@
 package com.ioc.rastreacovid.screens;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
-import com.ioc.rastreacovid.mappers.User;
+import com.ioc.rastreacovid.mappers.UserPost;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
+
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 
@@ -30,6 +32,10 @@ public class CreateUserScreen implements ActionListener {
 	private JTextField temail;
 	private JLabel tlf;
 	private JTextField ttlf;
+	private JLabel pass;
+	private JTextField tpass;
+	private JLabel passc;
+	private JTextField tpassc;
 	private JLabel role;
 	private JRadioButton admin;
 	private JRadioButton rastreator;
@@ -38,6 +44,8 @@ public class CreateUserScreen implements ActionListener {
 	private JButton reset;
 	private JLabel res;
 	private JFrame frame;
+	
+	private String rolselected;
 
 	public CreateUserScreen() {
 		initialize();
@@ -61,68 +69,92 @@ public class CreateUserScreen implements ActionListener {
 		title = new JLabel("Creació d'usuari");
 		title.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
 		title.setSize(235, 30);
-		title.setLocation(150, 30);
+		title.setLocation(150, 20);
 		frame.add(title);
 
 		name = new JLabel("Nom:");
 		name.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		name.setSize(100, 20);
-		name.setLocation(100, 100);
+		name.setLocation(100, 80);
 		frame.add(name);
 
 		tname = new JTextField();
 		tname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tname.setSize(190, 20);
-		tname.setLocation(200, 100);
+		tname.setLocation(200, 80);
 		frame.add(tname);
 
 		surname = new JLabel("Cognom:");
 		surname.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		surname.setSize(100, 20);
-		surname.setLocation(100, 150);
+		surname.setLocation(100, 120);
 		frame.add(surname);
 
 		tsurname = new JTextField();
 		tsurname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tsurname.setSize(190, 20);
-		tsurname.setLocation(200, 150);
+		tsurname.setLocation(200, 120);
 		frame.add(tsurname);
 
 		email = new JLabel("Email:");
 		email.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		email.setSize(100, 20);
-		email.setLocation(100, 200);
+		email.setLocation(100, 160);
 		frame.add(email);
 
 		temail = new JTextField();
 		temail.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		temail.setSize(190, 20);
-		temail.setLocation(200, 200);
+		temail.setLocation(200, 160);
 		frame.add(temail);
 
 		tlf = new JLabel("Telèfon:");
 		tlf.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		tlf.setSize(100, 20);
-		tlf.setLocation(100, 250);
+		tlf.setLocation(100, 200);
 		frame.add(tlf);
 
 		ttlf = new JTextField();
 		ttlf.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		ttlf.setSize(190, 20);
-		ttlf.setLocation(200, 250);
+		ttlf.setLocation(200, 200);
 		frame.add(ttlf);
+
+		pass = new JLabel("Contrasenya:");
+		pass.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		pass.setSize(100, 20);
+		pass.setLocation(100, 240);
+		frame.add(pass);
+
+		tpass = new JTextField();
+		tpass.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		tpass.setSize(190, 20);
+		tpass.setLocation(200, 240);
+		frame.add(tpass);
+
+		passc = new JLabel("Confirmació de Contrasenya:");
+		passc.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		passc.setSize(100, 20);
+		passc.setLocation(100, 280);
+		frame.add(passc);
+
+		tpassc = new JTextField();
+		tpassc.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		tpassc.setSize(190, 20);
+		tpassc.setLocation(200, 280);
+		frame.add(tpassc);
 
 		role = new JLabel("Rol:");
 		role.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		role.setSize(100, 20);
-		role.setLocation(100, 300);
+		role.setLocation(100, 320);
 		frame.add(role);
 
 		admin = new JRadioButton("Admin");
 		admin.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		admin.setSelected(true);
 		admin.setSize(106, 20);
-		admin.setLocation(200, 300);
+		admin.setLocation(200, 320);
 		frame.add(admin);
 
 		rastreator = new JRadioButton("Rastreator");
@@ -135,12 +167,13 @@ public class CreateUserScreen implements ActionListener {
 		rolegp = new ButtonGroup();
 		rolegp.add(admin);
 		rolegp.add(rastreator);
+		
 
 		sub = new JButton("Aceptar");
 		sub.setBackground(new Color(255, 255, 255));
 		sub.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		sub.setSize(100, 20);
-		sub.setLocation(130, 410);
+		sub.setLocation(130, 420);
 		sub.addActionListener(this);
 		frame.add(sub);
 
@@ -148,7 +181,7 @@ public class CreateUserScreen implements ActionListener {
 		reset.setBackground(new Color(255, 255, 255));
 		reset.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		reset.setSize(100, 20);
-		reset.setLocation(250, 410);
+		reset.setLocation(250, 420);
 		reset.addActionListener(this);
 		frame.add(reset);
 
@@ -161,9 +194,6 @@ public class CreateUserScreen implements ActionListener {
 		frame.setVisible(true);
 	}
 
-	// method actionPerformed()
-	// to get the action performed
-	// by the user and act accordingly
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == reset) {
 			String def = "";
@@ -171,27 +201,55 @@ public class CreateUserScreen implements ActionListener {
 			tsurname.setText(def);
 			temail.setText(def);
 			ttlf.setText(def);
-
-		}
-
-		else if (e.getSource() == sub) {
+			tpass.setText(def);
+		} else if (e.getSource() == sub) {
 			tname.setText(tname.getText());
 			tsurname.setText(tsurname.getText());
-			temail.setText(tsurname.getText());
-			ttlf.setText(tsurname.getText());
+			temail.setText(temail.getText());
+			ttlf.setText(ttlf.getText());
+			tpass.setText(tpass.getText());
+			tpassc.setText(tpassc.getText());
+			
+			if (rastreator.isSelected()) {
+				rolselected = "rastreator";
+		
+			} else {
+				rolselected = "admin";
+				
+			}
+	
+
 		}
+
+		String sname = tname.getText();
+		String ssurname = tsurname.getText();
+		String semail = temail.getText();
+		int stlf = Integer.parseInt(ttlf.getText());
+		String srolegp = rolegp.toString();
+		String spass = tpass.getText();
+		String spassc = tpassc.getText();
+		
+
+		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
+		String token = prefs.get("token", "token");
+		UserPost up = new UserPost();
+		up.setName(sname);
+		up.setSurname(ssurname);
+		up.setEmail(semail);
+		up.setPhone(stlf);
+		up.setType(rolselected);
+		up.setPass(spass);
+		up.setCpass(spassc);
+		
+	
+		ApiConnector.createUser(token, up);
+		
+
+
 	}
 
 	public Window getFrame() {
 		return frame;
-	}
-
-	public JTextField getTname() {
-		return tname;
-	}
-
-	public void setTname(JTextField tname) {
-		this.tname = tname;
 	}
 
 }
