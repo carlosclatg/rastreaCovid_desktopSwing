@@ -30,6 +30,8 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	private JButton pacientsButton;
 	private JButton usuarisButton;
 	private JButton statisticsButton;
+	private JButton createUserButton;
+	private JTextField txttitle;
 
 	public DashboardScreen() {
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
@@ -42,16 +44,25 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		panel.setBounds(100, 100, 500, 500);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		setTitle("Dashboard");
+		txttitle = new JTextField();
+		txttitle.setBackground(new Color(92, 255, 208));
+		txttitle.setText("RastreaCovid");
+		txttitle.setEditable(false);
+		txttitle.setHorizontalAlignment(SwingConstants.CENTER);
+		txttitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		txttitle.setBounds(152, 19, 182, 26);
+		panel.add(txttitle);
+		txttitle.setColumns(10);
 
 		// Button to logout and return to the login screen
 		JButton logoutButton = new JButton("Logout");
-		logoutButton.setBounds(164, 217, 170, 70);
+		logoutButton.setBounds(164, 350, 170, 70);
 		logoutButton.addActionListener(this);
 		panel.add(logoutButton);
 		
 		// Button to go to the patients window.
 		pacientsButton = new JButton("Pacients");
-		pacientsButton.setBounds(29, 76, 170, 70);
+		pacientsButton.setBounds(29, 120, 170, 70);
 		panel.add(pacientsButton);
 		pacientsButton.addActionListener(new ActionListener() {
 			@Override
@@ -63,8 +74,8 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		
 
 		// Button to go to the statistics window.
-		statisticsButton = new JButton("Estadístiques");
-		statisticsButton.setBounds(17, 155, 200, 50);
+		statisticsButton = new JButton("Estadístiques Pacients");
+		statisticsButton.setBounds(17, 200, 200, 50);
 		panel.add(statisticsButton);
 		statisticsButton.addActionListener(new ActionListener() {
 			@Override
@@ -74,10 +85,9 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 			}
 		});
 		
-		// Button to go to the users window, we prepare the implementation for the next
-		// sprint, we hide the button
+		// Button to go to the users window.
 		usuarisButton = new JButton("Usuaris");
-		usuarisButton.setBounds(297, 76, 170, 70);
+		usuarisButton.setBounds(297, 120, 170, 70);
 		usuarisButton.setVisible(true);
 		panel.add(usuarisButton);
 		usuarisButton.addActionListener(new ActionListener() {
@@ -87,13 +97,27 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
+		
+		// Button for to create user.
+		createUserButton = new JButton("Crear Usuari");
+		createUserButton.setBounds(280, 200, 200, 50);
+		panel.add(createUserButton);
+		createUserButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreateUserScreen screen = new CreateUserScreen();
+				screen.getFrame().setVisible(true);
+			}
+		});
 
 		JLabel tokenLabel = new JLabel();
 		tokenLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
 		tokenLabel.setBounds(100, 321, 299, 34);
 		tokenLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		tokenLabel.setText(token);
+		tokenLabel.setVisible(false);
 		panel.add(tokenLabel);
+		
 
 	}
 

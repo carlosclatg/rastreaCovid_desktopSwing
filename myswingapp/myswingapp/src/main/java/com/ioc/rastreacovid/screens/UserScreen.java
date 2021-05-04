@@ -71,14 +71,13 @@ public class UserScreen {
 		columnNames.add("Nom");
 		columnNames.add("Cognom");
 		columnNames.add("Email");
-		columnNames.add("Tipus");
-		columnNames.add("Telefón");
-
+		columnNames.add("Rol");
+		columnNames.add("Telèfon");
 		Vector fileVector = new Vector();
 
 		// Consult the existing patients and list them with columns
-		List<User> users = ApiConnector.retrieveAll(token);
-		System.out.println(users.size());
+		List<User> users = ApiConnector.getUsers(token)
+;		System.out.println(users.size());
 
 		users.forEach(u -> {
 			Vector<Object> row = new Vector<Object>();
@@ -144,46 +143,3 @@ public class UserScreen {
 	}
 
 }
-
-/**
- * Launch the application.
- */
-/*
- * public static void main(String[] args) { EventQueue.invokeLater(new
- * Runnable() { public void run() { try { UserScreen window = new UserScreen();
- * window.frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
- * } }); }
- * 
- * public UserScreen() { frame = new JFrame();
- * frame.getContentPane().setBackground(new Color(92, 255, 208));
- * frame.setBounds(100, 100, 500, 500);
- * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- * 
- * panel = new Panel(); frame.getContentPane().add(panel, BorderLayout.NORTH);
- * 
- * txtLlistatDusuaris = new JTextField();
- * txtLlistatDusuaris.setHorizontalAlignment(SwingConstants.CENTER);
- * txtLlistatDusuaris.setText("Llistat d'usuaris");
- * txtLlistatDusuaris.setBackground(new Color(92, 255, 208));
- * panel.add(txtLlistatDusuaris); txtLlistatDusuaris.setColumns(10);
- * 
- * btnEnrere = new JButton("Enrere"); btnEnrere.setBounds(50, 50, 50, 50);
- * frame.getContentPane().add(btnEnrere, BorderLayout.SOUTH);
- * 
- * }
- * 
- * public void setSize(int i, int j) { // TODO Esbozo de método generado
- * automáticamente
- * 
- * }
- * 
- * public void setVisible(boolean b) { // TODO Esbozo de método generado
- * automáticamente
- * 
- * }
- * 
- * public JComponent getFrame() { // TODO Esbozo de método generado
- * automáticamente return null; }
- * 
- * }
- */
