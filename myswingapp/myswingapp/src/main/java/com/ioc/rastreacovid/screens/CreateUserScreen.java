@@ -3,22 +3,11 @@ package com.ioc.rastreacovid.screens;
 import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.UserPost;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
-
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import javax.swing.JRadioButton;
 
 public class CreateUserScreen implements ActionListener {
 
@@ -238,8 +227,8 @@ public class CreateUserScreen implements ActionListener {
 		up.setEmail(semail);
 		up.setPhone(stlf);
 		up.setType(rolselected);
-		up.setPass(spass);
-		up.setCpass(spassc);
+		up.setPassword(spass);
+		up.setPasswordConfirm(spassc);
 		
 	
 		ApiConnector.createUser(token, up);
