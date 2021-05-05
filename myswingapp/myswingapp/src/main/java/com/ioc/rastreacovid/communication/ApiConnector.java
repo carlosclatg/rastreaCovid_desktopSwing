@@ -2,7 +2,6 @@ package com.ioc.rastreacovid.communication;
 
 import com.google.gson.Gson;
 import com.ioc.rastreacovid.mappers.*;
-import com.ioc.rastreacovid.screens.PatientDetailsScreen;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -162,7 +161,7 @@ public class ApiConnector {
 	
 	
 	// Method for the creation of users in the application.
-	public static UserPost createUser(String token, UserPost userpost) {
+	public static Id createUser(String token, UserPost userpost) {
 		try {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_postUser))
 					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
@@ -175,7 +174,7 @@ public class ApiConnector {
 			switch (response.statusCode()) {
 			case (200):
 				Gson g = new Gson();
-				return g.fromJson(response.body(), UserPost.class);
+				return g.fromJson(response.body(), Id.class);
 			default:
 				return null;
 			}

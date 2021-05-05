@@ -1,6 +1,7 @@
 package com.ioc.rastreacovid.screens;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
+import com.ioc.rastreacovid.mappers.Id;
 import com.ioc.rastreacovid.mappers.UserPost;
 
 import javax.swing.*;
@@ -231,7 +232,14 @@ public class CreateUserScreen implements ActionListener {
 		up.setPasswordConfirm(spassc);
 		
 	
-		ApiConnector.createUser(token, up);
+		Id id = ApiConnector.createUser(token, up);
+
+		if(id != null){
+			JOptionPane.showMessageDialog(null, "User created ok");
+		} else {
+			JOptionPane.showMessageDialog(null, "Ooops something went wrong");
+		}
+
 		
 
 
