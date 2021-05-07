@@ -19,6 +19,7 @@ import java.util.List;
 
 
 public class User {
+	String _id;
 	String name;
 	String surname;
 	String email;
@@ -27,8 +28,17 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User{" + "name=" + name + ", surname=\" + surname + \" email=" + email + ", type='" + type + '\'' + ", phone='" + phone + '}';
+		return "User{" + "_id=" + _id + ", name=" + name + ", surname=\" + surname + \" email=" + email + ", type='" + type + '\'' + ", phone='" + phone + '}';
 	}
+	
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_Id(String _id) {
+		this._id = _id;
+	}
+	
 	
 	public String getName() {
 		return name;

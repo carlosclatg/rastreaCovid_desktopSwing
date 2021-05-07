@@ -17,14 +17,14 @@ public class ApiConnector {
 	private static final String URL_auth = URL + "/user/auth";
 	private static final String URL_getAllPatients = URL + "/pacients";
 	private static final String URL_getPatientById = URL + "/pacient/";
-	private static final String URL_postPatient = URL + "/pacient";
+	private static final String URL_postPatient = URL + "/pacient/";
 	private static final String URL_getSintoms = URL + "/sintoms/";
 	private static final String URL_deletePatient = URL + "/pacient/";
 	private static final String URL_getFrequency = URL + "/stats-freq-sin/";
 	private static final String URL_getStats = URL + "/stats";
 	private static final String URL_getUsers = URL + "/users/";
 	private static final String URL_postUser = URL + "/user/";
-	private static final String URL_retrieveUser = URL + "retrieve-user";
+	private static final String URL_deleteUser = URL + "/user/";
 
 	private static final String LANG_CAT = "cat";
 	private static final String LANG_ES = "es";
@@ -157,9 +157,6 @@ public class ApiConnector {
 
 	}
 
-	// ** TODO NEXT SPRINT ** //
-	
-	
 	// Method for the creation of users in the application.
 	public static Id createUser(String token, UserPost userpost) {
 		try {
@@ -183,6 +180,34 @@ public class ApiConnector {
 			System.out.println(e.getMessage());
 			return null;
 		}
+	}
+
+	public static String deleteUser(String token, String email) { //
+		try {
+
+			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_deleteUser + email))
+					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token).DELETE()
+					.build();
+
+			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+					HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.statusCode());
+			System.out.println(response.body());
+			switch (response.statusCode()) {
+			case (200):
+				Gson g = new Gson();
+				String ret = g.fromJson(response.body(), String.class); // This will return an ok, when it has been
+																		// removed.
+				return ret;
+			default:
+				return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+
 	}
 
 	// Method for the creation of patients in the application.

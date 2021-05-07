@@ -16,8 +16,7 @@ public class UserPost {
 	String surname;
 	String password;
 	String passwordConfirm;
-
-
+	
 	String email;
 	String type;
 	Integer phone;

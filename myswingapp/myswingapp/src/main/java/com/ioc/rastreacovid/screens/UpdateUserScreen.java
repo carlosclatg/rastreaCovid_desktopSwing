@@ -1,16 +1,24 @@
-package com.ioc.rastreacovid.screens;
+/*package com.ioc.rastreacovid.screens;
 
-import com.ioc.rastreacovid.communication.ApiConnector;
-import com.ioc.rastreacovid.mappers.Id;
-import com.ioc.rastreacovid.mappers.UserPost;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
-public class CreateUserScreen implements ActionListener {
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import com.ioc.rastreacovid.mappers.User;
+
+
+
+public class UpdateUserScreen implements ActionListener {
 
 	// Components of the Form
 	private JLabel title;
@@ -37,23 +45,23 @@ public class CreateUserScreen implements ActionListener {
 	
 	private String rolselected;
 
-	public CreateUserScreen() {
-		initialize();
+	public UpdateUserScreen(User user) {
+		initialize(user);
 	}
 
 	// Initialize the contents of the frame.
 
-	public void initialize() {
+	public void initialize( User user) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 
-		frame.setTitle("Creació d'usuari");
+		frame.setTitle("Actualizació d'usuari");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
 
-		frame.setTitle("Creació d'usuari");
+		frame.setTitle("Actualizació d'usuari");
 		frame.setBounds(300, 90, 500, 500);
 
 		title = new JLabel("Creació d'usuari");
@@ -67,8 +75,14 @@ public class CreateUserScreen implements ActionListener {
 		name.setSize(100, 20);
 		name.setLocation(100, 80);
 		frame.add(name);
+		
+		
+		// We show the "Nom" label and the patient's name
+		
+		
 
-		tname = new JTextField();
+		//tname = new JTextField();
+		tname.setText(user.getName());	
 		tname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tname.setSize(190, 20);
 		tname.setLocation(200, 80);
@@ -81,6 +95,7 @@ public class CreateUserScreen implements ActionListener {
 		frame.add(surname);
 
 		tsurname = new JTextField();
+		tsurname.setText(user.getSurname());
 		tsurname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tsurname.setSize(190, 20);
 		tsurname.setLocation(200, 120);
@@ -182,71 +197,21 @@ public class CreateUserScreen implements ActionListener {
 		frame.add(res);
 
 		frame.setVisible(true);
+	
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == reset) {
-			String def = "";
-			tname.setText(def);
-			tsurname.setText(def);
-			temail.setText(def);
-			ttlf.setText(def);
-			tpass.setText(def);
-		} else if (e.getSource() == sub) {
-			tname.setText(tname.getText());
-			tsurname.setText(tsurname.getText());
-			temail.setText(temail.getText());
-			ttlf.setText(ttlf.getText());
-			tpass.setText(tpass.getText());
-			tpassc.setText(tpassc.getText());
-			
-			if (rastreator.isSelected()) {
-				rolselected = "rastreator";
+		// TODO Esbozo de método generado automáticamente
 		
-			} else {
-				rolselected = "admin";
-				
-			}
-	
-
-		}
-
-		String sname = tname.getText();
-		String ssurname = tsurname.getText();
-		String semail = temail.getText();
-		int stlf = Integer.parseInt(ttlf.getText());
-		String srolegp = rolegp.toString();
-		String spass = tpass.getText();
-		String spassc = tpassc.getText();
-		
-
-		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
-		String token = prefs.get("token", "token");
-		UserPost up = new UserPost();
-		up.setName(sname);
-		up.setSurname(ssurname);
-		up.setEmail(semail);
-		up.setPhone(stlf);
-		up.setType(rolselected);
-		up.setPassword(spass);
-		up.setPasswordConfirm(spassc);
-		
-	
-		Id id = ApiConnector.createUser(token, up);
-
-		if(id != null){
-			JOptionPane.showMessageDialog(null, "L'usuari s'ha creat amb exit");
-		} else {
-			JOptionPane.showMessageDialog(null, "Ooops something went wrong");
-		}
-
-		
-
-
 	}
 
 	public Window getFrame() {
-		return frame;
+		// TODO Esbozo de método generado automáticamente
+		return null;
+	}
+	
+
 	}
 
-}
+*/

@@ -109,6 +109,18 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
+		
+		// Button for to delete user.
+		createUserButton = new JButton("Eliminar Usuari");
+		createUserButton.setBounds(280, 260, 200, 50);
+		panel.add(createUserButton);
+		createUserButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DeleteUserScreen screen = new DeleteUserScreen();
+				screen.getFrame().setVisible(true);
+			}
+		});
 
 		JLabel tokenLabel = new JLabel();
 		tokenLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 8));
