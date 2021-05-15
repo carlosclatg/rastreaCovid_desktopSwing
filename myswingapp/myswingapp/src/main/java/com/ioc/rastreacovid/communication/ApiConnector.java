@@ -13,7 +13,8 @@ import java.util.List;
 //Class to manage the API connection//
 public class ApiConnector {
 
-	private static final String URL = "http://localhost:8080/api";
+	 private static final String URL = "http://localhost:8080/api";
+	//private static final String URL = "https://rastreados-bglk23lqpq-lz.a.run.app/api/"; // Conexión Google Cloud
 	private static final String URL_auth = URL + "/user/auth";
 	private static final String URL_getAllPatients = URL + "/pacients";
 	private static final String URL_getPatientById = URL + "/pacient/";
@@ -25,6 +26,7 @@ public class ApiConnector {
 	private static final String URL_getUsers = URL + "/users/";
 	private static final String URL_postUser = URL + "/user/";
 	private static final String URL_deleteUser = URL + "/user/";
+	private static final String URL_updateUser = URL + "/user/update";
 
 	private static final String LANG_CAT = "cat";
 	private static final String LANG_ES = "es";
@@ -209,6 +211,32 @@ public class ApiConnector {
 		}
 
 	}
+	
+	
+	public static String updateUser(String token, UpdateUser updateUser) {
+		try {
+			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_updateUser))
+					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
+					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updateUser)))
+					.build();
+			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+					HttpResponse.BodyHandlers.ofString());
+
+			System.out.println(response.statusCode());
+			System.out.println(response.body());
+			switch (response.statusCode()) {
+				case (200):
+					Gson g = new Gson();
+					return g.fromJson(response.body(), Id.class).getId();
+				default:
+					return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 
 	// Method for the creation of patients in the application.
 	public static Id postPacient(String token, PatientPost patientPost) {
@@ -306,6 +334,31 @@ public class ApiConnector {
 
 	}
 
+	public static String updatePacient(String token, UpdatePacient updatePacient) {
+		try {
+			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_getPatientById + updatePacient.get_id()))
+					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
+					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updatePacient)))
+					.build();
+			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+					HttpResponse.BodyHandlers.ofString());
+
+			System.out.println(response.statusCode());
+			System.out.println(response.body());
+			switch (response.statusCode()) {
+				case (200):
+					Gson g = new Gson();
+					return g.fromJson(response.body(), Id.class).getId();
+				default:
+					return null;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	public static List<CountSintom> getFrequency(String token, String lang) { // lang puede ser cat, eng o es
 																				// dependiendo del idioma de la app. Por
 																				// defecto cat.

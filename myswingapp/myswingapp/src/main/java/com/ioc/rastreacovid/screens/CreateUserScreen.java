@@ -34,7 +34,7 @@ public class CreateUserScreen implements ActionListener {
 	private JButton reset;
 	private JLabel res;
 	private JFrame frame;
-	
+
 	private String rolselected;
 
 	public CreateUserScreen() {
@@ -157,7 +157,6 @@ public class CreateUserScreen implements ActionListener {
 		rolegp = new ButtonGroup();
 		rolegp.add(admin);
 		rolegp.add(rastreator);
-		
 
 		sub = new JButton("Aceptar");
 		sub.setBackground(new Color(255, 255, 255));
@@ -199,16 +198,14 @@ public class CreateUserScreen implements ActionListener {
 			ttlf.setText(ttlf.getText());
 			tpass.setText(tpass.getText());
 			tpassc.setText(tpassc.getText());
-			
+
 			if (rastreator.isSelected()) {
 				rolselected = "rastreator";
-		
+
 			} else {
 				rolselected = "admin";
-				
-			}
-	
 
+			}
 		}
 
 		String sname = tname.getText();
@@ -218,7 +215,6 @@ public class CreateUserScreen implements ActionListener {
 		String srolegp = rolegp.toString();
 		String spass = tpass.getText();
 		String spassc = tpassc.getText();
-		
 
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
@@ -230,23 +226,19 @@ public class CreateUserScreen implements ActionListener {
 		up.setType(rolselected);
 		up.setPassword(spass);
 		up.setPasswordConfirm(spassc);
-		
-	
+
 		Id id = ApiConnector.createUser(token, up);
 
-		if(id != null){
+		if (id != null) {
 			JOptionPane.showMessageDialog(null, "L'usuari s'ha creat amb exit");
+			frame.dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, "Ooops something went wrong");
 		}
-
-		
-
 
 	}
 
 	public Window getFrame() {
 		return frame;
 	}
-
 }

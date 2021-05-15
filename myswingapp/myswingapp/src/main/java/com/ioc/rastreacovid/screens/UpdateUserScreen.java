@@ -1,4 +1,4 @@
-/*package com.ioc.rastreacovid.screens;
+package com.ioc.rastreacovid.screens;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,12 +11,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.ioc.rastreacovid.communication.ApiConnector;
+import com.ioc.rastreacovid.mappers.UpdateUser;
 import com.ioc.rastreacovid.mappers.User;
-
-
 
 public class UpdateUserScreen implements ActionListener {
 
@@ -39,10 +40,9 @@ public class UpdateUserScreen implements ActionListener {
 	private JRadioButton rastreator;
 	private ButtonGroup rolegp;
 	private JButton sub;
-	private JButton reset;
 	private JLabel res;
 	private JFrame frame;
-	
+
 	private String rolselected;
 
 	public UpdateUserScreen(User user) {
@@ -51,7 +51,7 @@ public class UpdateUserScreen implements ActionListener {
 
 	// Initialize the contents of the frame.
 
-	public void initialize( User user) {
+	public void initialize(User user) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
@@ -64,7 +64,7 @@ public class UpdateUserScreen implements ActionListener {
 		frame.setTitle("Actualizació d'usuari");
 		frame.setBounds(300, 90, 500, 500);
 
-		title = new JLabel("Creació d'usuari");
+		title = new JLabel("Actualizació");
 		title.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
 		title.setSize(235, 30);
 		title.setLocation(150, 20);
@@ -75,17 +75,12 @@ public class UpdateUserScreen implements ActionListener {
 		name.setSize(100, 20);
 		name.setLocation(100, 80);
 		frame.add(name);
-		
-		
-		// We show the "Nom" label and the patient's name
-		
-		
 
-		//tname = new JTextField();
-		tname.setText(user.getName());	
+		tname = new JTextField();
 		tname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tname.setSize(190, 20);
 		tname.setLocation(200, 80);
+		tname.setText(user.getName());
 		frame.add(tname);
 
 		surname = new JLabel("Cognom:");
@@ -95,10 +90,10 @@ public class UpdateUserScreen implements ActionListener {
 		frame.add(surname);
 
 		tsurname = new JTextField();
-		tsurname.setText(user.getSurname());
 		tsurname.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tsurname.setSize(190, 20);
 		tsurname.setLocation(200, 120);
+		tsurname.setText(user.getSurname());
 		frame.add(tsurname);
 
 		email = new JLabel("Email:");
@@ -111,6 +106,7 @@ public class UpdateUserScreen implements ActionListener {
 		temail.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		temail.setSize(190, 20);
 		temail.setLocation(200, 160);
+		temail.setText(user.getEmail());
 		frame.add(temail);
 
 		tlf = new JLabel("Telèfon:");
@@ -123,6 +119,7 @@ public class UpdateUserScreen implements ActionListener {
 		ttlf.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		ttlf.setSize(190, 20);
 		ttlf.setLocation(200, 200);
+		ttlf.setText(user.getPhone().toString());
 		frame.add(ttlf);
 
 		pass = new JLabel("Contrasenya:");
@@ -135,6 +132,7 @@ public class UpdateUserScreen implements ActionListener {
 		tpass.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tpass.setSize(190, 20);
 		tpass.setLocation(200, 240);
+		tpass.setText("*********");
 		frame.add(tpass);
 
 		passc = new JLabel("Confirmació de Contrasenya:");
@@ -147,6 +145,7 @@ public class UpdateUserScreen implements ActionListener {
 		tpassc.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		tpassc.setSize(190, 20);
 		tpassc.setLocation(200, 280);
+		tpassc.setText("*********");
 		frame.add(tpassc);
 
 		role = new JLabel("Rol:");
@@ -172,24 +171,54 @@ public class UpdateUserScreen implements ActionListener {
 		rolegp = new ButtonGroup();
 		rolegp.add(admin);
 		rolegp.add(rastreator);
-		
 
-		sub = new JButton("Aceptar");
+		if (user.getType().toString().equalsIgnoreCase("rastreator"))
+			rastreator.setSelected(true);
+		else
+			admin.setSelected(true);
+
+		sub = new JButton("Actualitzar");
 		sub.setBackground(new Color(255, 255, 255));
 		sub.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		sub.setSize(100, 20);
-		sub.setLocation(130, 420);
+		sub.setLocation(170, 420);
 		sub.addActionListener(this);
 		frame.add(sub);
+		sub.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tpass.getText() != null && tpassc.getText() != null) {
+					if (tpass.getText().contains("*") || tpassc.getText().contains("*")
+							|| !tpass.getText().equals(tpassc.getText())) {
+						JOptionPane.showMessageDialog(null,
+								"Les contrassenyes no poden contindre caràcters especials i han de coincidir");
+					} else {
 
-		reset = new JButton("Reset");
-		reset.setBackground(new Color(255, 255, 255));
-		reset.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		reset.setSize(100, 20);
-		reset.setLocation(250, 420);
-		reset.addActionListener(this);
-		frame.add(reset);
+						UpdateUser updateUser = new UpdateUser();
+						updateUser.setName(tname.getText());
+						updateUser.setSurname(tsurname.getText());
+						updateUser.setEmail(temail.getText());
+						updateUser.setPhone(Integer.parseInt(ttlf.getText()));
+						if (rastreator.isSelected()) {
+							rolselected = "rastreator";
 
+						} else {
+							rolselected = "admin";
+
+						}
+						updateUser.setType(rolselected);
+						updateUser.setPassword(tpass.getText());
+						updateUser.setPasswordConfirm(tpassc.getText());
+						ApiConnector.updateUser(token, updateUser);
+						JOptionPane.showMessageDialog(null, "S'ha actualitzat correctament");
+						frame.dispose();
+
+					}
+				} else
+					JOptionPane.showMessageDialog(null,
+							"Les contrassenyes no poden contindre caràcters especials i han de coincidir");
+			}
+		});
 		res = new JLabel("");
 		res.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		res.setSize(500, 25);
@@ -197,21 +226,15 @@ public class UpdateUserScreen implements ActionListener {
 		frame.add(res);
 
 		frame.setVisible(true);
-	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Esbozo de método generado automáticamente
-		
+
 	}
 
 	public Window getFrame() {
-		// TODO Esbozo de método generado automáticamente
-		return null;
-	}
-	
 
+		return frame;
 	}
-
-*/
+}

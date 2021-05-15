@@ -31,6 +31,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	private JButton usuarisButton;
 	private JButton statisticsButton;
 	private JButton createUserButton;
+	private JButton infoButton;
 	private JTextField txttitle;
 
 	public DashboardScreen() {
@@ -59,7 +60,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		logoutButton.setBounds(164, 350, 170, 70);
 		logoutButton.addActionListener(this);
 		panel.add(logoutButton);
-		
+
 		// Button to go to the patients window.
 		pacientsButton = new JButton("Pacients");
 		pacientsButton.setBounds(29, 120, 170, 70);
@@ -71,7 +72,6 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
-		
 
 		// Button to go to the statistics window.
 		statisticsButton = new JButton("Estadístiques Pacients");
@@ -84,7 +84,19 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
-		
+
+		// Button for to delete user.
+		createUserButton = new JButton("Eliminar Pacient");
+		createUserButton.setBounds(17, 260, 200, 50);
+		panel.add(createUserButton);
+		createUserButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DeletePatientScreen screen = new DeletePatientScreen();
+				screen.getFrame().setVisible(true);
+			}
+		});
+
 		// Button to go to the users window.
 		usuarisButton = new JButton("Usuaris");
 		usuarisButton.setBounds(297, 120, 170, 70);
@@ -97,7 +109,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
-		
+
 		// Button for to create user.
 		createUserButton = new JButton("Crear Usuari");
 		createUserButton.setBounds(280, 200, 200, 50);
@@ -109,7 +121,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 				screen.getFrame().setVisible(true);
 			}
 		});
-		
+
 		// Button for to delete user.
 		createUserButton = new JButton("Eliminar Usuari");
 		createUserButton.setBounds(280, 260, 200, 50);
@@ -130,10 +142,20 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		tokenLabel.setVisible(false);
 		panel.add(tokenLabel);
 		
+		// Button for to info.
+		infoButton = new JButton("I");
+		infoButton.setBounds(351, 19, 35, 35);
+		panel.add(infoButton);
+		infoButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InfoScreen screen = new InfoScreen();
+				screen.getFrame().setVisible(true);
+			}
+		});
 
 	}
 
-	
 	@Override
 	public void windowOpened(WindowEvent windowEvent) {
 
@@ -213,7 +235,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	public void setPacientsButton(JButton pacientsButton) {
 		this.pacientsButton = pacientsButton;
 	}
-	
+
 	public JButton getStatisticsButton() {
 		return statisticsButton;
 	}
@@ -222,6 +244,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		this.statisticsButton = statisticsButton;
 	}
 
+	// Method for generating patient statistics.
 	private static XYDataset createDataset() {
 
 		DefaultXYDataset ds = new DefaultXYDataset();

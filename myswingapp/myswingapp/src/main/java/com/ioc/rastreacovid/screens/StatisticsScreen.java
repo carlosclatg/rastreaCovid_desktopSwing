@@ -68,7 +68,7 @@ public class StatisticsScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("Charts");
-				frame.setSize(600, 400);
+				frame.setSize(1050, 500);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
 
@@ -84,7 +84,7 @@ public class StatisticsScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("Charts");
-				frame.setSize(600, 400);
+				frame.setSize(1050, 500);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
 
@@ -100,7 +100,7 @@ public class StatisticsScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("Charts");
-				frame.setSize(600, 400);
+				frame.setSize(1050, 500);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
 
@@ -161,12 +161,10 @@ public class StatisticsScreen {
 
 	
 	private Container getContentPane() {
-		// TODO Esbozo de método generado automáticamente
 		return null;
 	}
 
 	private void setTitle(String string) {
-		// TODO Esbozo de método generado automáticamente
 
 	}
 

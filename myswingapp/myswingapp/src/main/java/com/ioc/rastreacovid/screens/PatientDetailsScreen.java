@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Point;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,8 +18,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
+import com.ioc.rastreacovid.mappers.Contact;
 import com.ioc.rastreacovid.mappers.Patient;
 import com.ioc.rastreacovid.mappers.PatientDetail;
+import com.ioc.rastreacovid.mappers.Sintom;
+
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,16 +36,15 @@ import java.awt.Font;
 
 public class PatientDetailsScreen {
 
-	private JFrame frmDetailPacient;
-	private JTextField textField;
-	private JLabel lblNewLabel;
+	private JFrame frame;
+	private JButton updatePatient;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					PatientDetailsScreen window = new PatientDetailsScreen(null);
-					window.frmDetailPacient.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,17 +64,53 @@ public class PatientDetailsScreen {
 	 * @param patientdetail
 	 */
 	public void initialize(PatientDetail patientdetail) {
-		frmDetailPacient = new JFrame();
-		frmDetailPacient.getContentPane().setBackground(new Color(92, 255, 208));
-		frmDetailPacient.setBounds(100, 100, 1000, 500);
-		frmDetailPacient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all
-																			// the app
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(92, 255, 208));
+		frame.setBounds(100, 100, 1000, 500);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all
+																	// the app
 
-		frmDetailPacient.setTitle("Detall del Pacient");
+		frame.setTitle("Detall del Pacient");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
 
-		frmDetailPacient.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		updatePatient = new JButton("Actualitzar Pacient");
+		frame.getContentPane().add(updatePatient, BorderLayout.SOUTH);
+
+		updatePatient.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Patient p = new Patient();
+				p.set_id(patientdetail.get_id());
+				p.setName(patientdetail.getName());
+				p.setSurname(patientdetail.getSurname());
+				p.setPhone(patientdetail.getPhone());
+				p.setBirthdate(patientdetail.getBirthdate());
+				p.setPCRDate(patientdetail.getPCRDate());
+
+				List<String> sintoms = new ArrayList<String>();
+				for (int i = 0; i < patientdetail.getSintoms().size(); i++) {
+					sintoms.add(patientdetail.getSintoms().get(i).getSintoma_cat());
+
+				}
+
+				List<String> contacts = new ArrayList<String>();
+				for (int i = 0; i < patientdetail.getContacts().size(); i++) {
+					contacts.add(patientdetail.getContacts().get(i).getName());
+
+				}
+
+				p.setSintoms(sintoms);
+				p.setContacts(contacts);
+				// p.setSintoms(patientdetail.getSintoms());
+				// p.setContacts(patientdetail.getSintoms());
+
+				UpdatePatientScreen screen = new UpdatePatientScreen(p);
+				// screen.getFrame().setVisible(true);
+			}
+		});
 
 		// We show the "Nom" label and the patient's name
 		JLabel name = new JLabel("Nom:");
@@ -147,7 +187,7 @@ public class PatientDetailsScreen {
 	}
 
 	public Window getFrame() {
-		return frmDetailPacient;
+		return frame;
 	}
 
 	public void setSize(int i, int j) {

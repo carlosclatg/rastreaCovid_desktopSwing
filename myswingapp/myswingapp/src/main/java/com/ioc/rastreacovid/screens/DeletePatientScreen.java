@@ -1,15 +1,12 @@
 package com.ioc.rastreacovid.screens;
 
-import com.ioc.rastreacovid.communication.ApiConnector;
-import com.ioc.rastreacovid.mappers.Patient;
-import com.ioc.rastreacovid.mappers.PatientDetail;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Panel;
+import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,20 +16,30 @@ import java.util.List;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
-import javax.swing.*;
-import javax.swing.text.JTextComponent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 
-@Getter
-@Setter
+import com.ioc.rastreacovid.communication.ApiConnector;
 
-//In this class we design and apply logic to the patient window.
+import com.ioc.rastreacovid.mappers.Patient;
 
-public class PatientsScreen {
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.BorderLayout;
+import javax.swing.SwingConstants;
+
+public class DeletePatientScreen {
 
 	private JFrame frame;
 	private Panel panel;
-	private JTextField txtLlistatPacients;
 	private JTable table;
+	private JLabel titledelete;
+
 	private JTextField searchName;
 	private JLabel lblname;
 	private JTextField searchSurname;
@@ -41,19 +48,20 @@ public class PatientsScreen {
 	private JLabel lblPhone;
 	private JButton searchButton;
 	private JLabel doubleClick;
+
+	private List<Patient> patients;
+	private Vector fileVector;
+	private Vector columnNames;
 	private String cadenaN;
 	private String cadenaS;
 	private String cadenaP;
-	private Vector fileVector;
-	private List<Patient> patients;
 
-	// Create the application.
+	public DeletePatientScreen() {
 
-	public PatientsScreen() {
 		initialize();
 	}
 
-	public PatientsScreen(Vector fileVector, String cadenaN, String cadenaS, String cadenaP) {
+	public DeletePatientScreen(Vector fileVector, String cadenaN, String cadenaS, String cadenaP) {
 		this.fileVector = fileVector;
 		this.cadenaN = cadenaN;
 		this.cadenaS = cadenaS;
@@ -62,7 +70,7 @@ public class PatientsScreen {
 		initialize();
 	}
 
-	// Initialize the contents of the frame.
+// Initialize the contents of the frame.
 
 	public void initialize() {
 		GridBagConstraints c = new GridBagConstraints();
@@ -70,21 +78,18 @@ public class PatientsScreen {
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
-		frame.setTitle("Llista de pacients");
-		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
-		String token = prefs.get("token", "token");
-		
+
 		searchName = new JTextField(cadenaN != null ? cadenaN : "");
 		searchSurname = new JTextField(cadenaS != null ? cadenaS : "");
 		searchPhone = new JTextField(cadenaP != null ? cadenaP : "");
 		lblname = new JLabel("Buscar per nom:");
 		lblSurname = new JLabel("Buscar per cognom:");
 		lblPhone = new JLabel("Buscar per telèfon:");
-		doubleClick = new JLabel ("Fes doble click per veure el detall del pacient");
+
+		doubleClick = new JLabel("Fes doble click per eliminar un pacient");
 		doubleClick.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		frame.setLayout(new GridBagLayout());
-		
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -117,53 +122,53 @@ public class PatientsScreen {
 		c.gridx = 1;
 		c.gridy = 2;
 		frame.getContentPane().add(searchPhone, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
 		frame.getContentPane().add(doubleClick, c);
-		
 
 		searchName.setColumns(10);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 
 		searchButton = new JButton("Buscar");
-		
+
 		patients = new ArrayList();
-		
+
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileVector.clear();
 				boolean filtraNom = false;
 				boolean filtraCognom = false;
-				boolean filtraTlf = false;
+				boolean filtraEmail = false;
 				CharSequence csn = searchName.getText(); // String is already a CharSequence
 				CharSequence css = searchSurname.getText();
-				CharSequence csp = searchPhone.getText();
-				
+				CharSequence cse = searchPhone.getText();
 				if (csn.length() > 0)
 					filtraNom = true;
 				if (css.length() > 0)
 					filtraCognom = true;
-				if (csp.length() > 0)
-					filtraTlf = true;
-				if (filtraNom || filtraCognom || filtraTlf)
-					fileVector = filtrar(filtraNom, filtraCognom, filtraTlf, csn, css, csp);
-				PatientsScreen screen = new PatientsScreen(fileVector, searchName.getText(), searchSurname.getText(),
-						searchPhone.getText());
+				if (cse.length() > 0)
+					filtraEmail = true;
+				if (filtraNom || filtraCognom || filtraEmail)
+					fileVector = filtrar(filtraNom, filtraCognom, filtraEmail, csn, css, cse);
+
+				DeletePatientScreen screen = new DeletePatientScreen(fileVector, searchName.getText(),
+						searchSurname.getText(), searchPhone.getText());
 				screen.getFrame().setVisible(true);
 				frame.dispose();
 
 			}
 		});
-		
-		frame.setTitle("Llista de Pacients");
 
-		// We will display the patients in a list with the columns corresponding to the
-		// information we need
-		// Define the columns
-		Vector columnNames = new Vector();
+		frame.setTitle("Llista de pacients");
+		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
+		String token = prefs.get("token", "token");
+
+// We will display the users in a list with the columns corresponding to the information we need
+// Define the columns
+		columnNames = new Vector();
 		columnNames.add("ID");
 		columnNames.add("Nom");
 		columnNames.add("Cognom");
@@ -172,7 +177,10 @@ public class PatientsScreen {
 		columnNames.add("Data PCR");
 		columnNames.add("Nº de Contactes");
 		columnNames.add("Nº de Símptones");
-		
+
+		// Vector fileVector = new Vector();
+
+		// Consult the existing patients and list them with columns
 		if (fileVector == null || (fileVector != null && fileVector.size() == 0)) {
 			fileVector = new Vector();
 			patients = ApiConnector.getAllPatients(token);
@@ -189,31 +197,39 @@ public class PatientsScreen {
 				row.add(p.getContacts().size());
 				row.add(p.getSintoms().size());
 				fileVector.add(row);
-
 			});
 		}
-		
-		// Define the table
+
+// Define the table
 		table = new JTable(fileVector, columnNames);
 		table.setAutoCreateRowSorter(true);
+
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
-				// If you double click it shows the symptoms in the new window
+
+				// If you double click deletes a user.
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
 					System.out.println(token);
-					PatientDetail detail = ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0));
-					PatientDetailsScreen pds = new PatientDetailsScreen(detail);
-					pds.getFrame().setVisible(true);
+					int row2 = table.getSelectedRow();
+					String pacientId = (String) table.getValueAt(row2, 0);
+					String deleteUser = ApiConnector.deletePatient(token, pacientId);
+					DeletePatientScreen dps = new DeletePatientScreen();
+					dps.getFrame().setVisible(true);
+
+					if (pacientId != null) {
+						JOptionPane.showMessageDialog(null, "El pacient s'ha eliminat correctament");
+					}
+
 				}
 			}
 		});
 
-		// We define the table format
+// We define the table format
 		table.setDefaultEditor(Object.class, null);
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(true);
@@ -223,15 +239,16 @@ public class PatientsScreen {
 		table.setSelectionBackground(Color.blue);
 		JScrollPane jScrollPane = new JScrollPane(table);
 		jScrollPane.setVisible(true);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 300; // make this component tall
 		c.weightx = 0.0;
 		c.gridwidth = 30;
 		c.gridx = 0;
 		c.gridy = 4;
+
 		frame.getContentPane().add(jScrollPane, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 10;
 		c.weightx = 0.5;
@@ -240,53 +257,54 @@ public class PatientsScreen {
 		frame.getContentPane().add(searchButton, c);
 	}
 
-	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraTlf, CharSequence csn,
-			CharSequence css, CharSequence csp) {
+	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraPhone, CharSequence csn,
+			CharSequence css, CharSequence cse) {
 		Vector fileVector = new Vector();
 
-		if (filtraNom && filtraCognom && filtraTlf) {
+		if (filtraNom && filtraCognom && filtraPhone) {
 			patients.forEach(p -> {
 				if (p.getName().contains(csn) && p.getSurname().contains(css)
-						&& p.getPhone().toString().contains(csp)) {
+						&& p.getPhone().toString().contains(cse)) {
 					Vector<Object> row = new Vector<Object>();
 					row.add(p.get_id());
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
-
 		}
-		if (!filtraNom && filtraCognom && filtraTlf) {
+		if (!filtraNom && filtraCognom && filtraPhone) {
 			patients.forEach(p -> {
-				if (p.getSurname().contains(css) && p.getPhone().toString().contains(csp)) {
+				if (p.getSurname().contains(css) && p.getPhone().toString().contains(cse)) {
 					Vector<Object> row = new Vector<Object>();
 					row.add(p.get_id());
 					row.add(p.getName());
 					row.add(p.getSurname());
-
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
-
 		}
-		if (filtraNom && !filtraCognom && filtraTlf)
-
-		{
+		if (filtraNom && !filtraCognom && filtraPhone) {
 			patients.forEach(p -> {
-				if (p.getName().contains(csn) && p.getPhone().toString().contains(csp)) {
+				if (p.getName().contains(csn) && p.getPhone().toString().contains(cse)) {
 					Vector<Object> row = new Vector<Object>();
 					row.add(p.get_id());
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
 		}
-		if (filtraNom && filtraCognom && !filtraTlf) {
+		if (filtraNom && filtraCognom && !filtraPhone) {
 			patients.forEach(p -> {
 				if (p.getName().contains(csn) && p.getSurname().contains(css)) {
 					Vector<Object> row = new Vector<Object>();
@@ -294,23 +312,28 @@ public class PatientsScreen {
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
 		}
-		if (!filtraNom && !filtraCognom && filtraTlf) {
+
+		if (!filtraNom && !filtraCognom && filtraPhone) {
 			patients.forEach(p -> {
-				if (p.getPhone().toString().contains(csp)) {
+				if (p.getPhone().toString().contains(cse)) {
 					Vector<Object> row = new Vector<Object>();
 					row.add(p.get_id());
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
 		}
-		if (!filtraNom && filtraCognom && !filtraTlf) {
+		if (!filtraNom && filtraCognom && !filtraPhone) {
 			patients.forEach(p -> {
 				if (p.getSurname().contains(css)) {
 					Vector<Object> row = new Vector<Object>();
@@ -318,11 +341,13 @@ public class PatientsScreen {
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
 		}
-		if (filtraNom && !filtraCognom && !filtraTlf) {
+		if (filtraNom && !filtraCognom && !filtraPhone) {
 			patients.forEach(p -> {
 				if (p.getName().contains(csn)) {
 					Vector<Object> row = new Vector<Object>();
@@ -330,14 +355,17 @@ public class PatientsScreen {
 					row.add(p.getName());
 					row.add(p.getSurname());
 					row.add(p.getPhone());
+					row.add(p.getBirthdate());
+					row.add(p.getPCRDate());
 					fileVector.add(row);
 				}
 			});
 		}
+
 		return fileVector;
 	}
 
-	// Generation of getters & setters
+//Generation of getters & setters
 	public JTable getTable() {
 		return table;
 	}

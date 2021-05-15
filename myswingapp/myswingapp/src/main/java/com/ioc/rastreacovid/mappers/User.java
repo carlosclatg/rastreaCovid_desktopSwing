@@ -25,10 +25,12 @@ public class User {
 	String email;
 	String type;
 	Integer phone;
+	String password;
+	String passwordConfirm;
 
 	@Override
 	public String toString() {
-		return "User{" + "_id=" + _id + ", name=" + name + ", surname=\" + surname + \" email=" + email + ", type='" + type + '\'' + ", phone='" + phone + '}';
+		return "User{" + "_id=" + _id + ", name=" + name + ", surname=" + surname + " email=" + email + ", type='" + type + '\'' + ", phone='" + phone + '}';
 	}
 	
 	public String get_id() {
@@ -78,6 +80,22 @@ public class User {
 
 	public void setPhone(Integer phone) {
 		this.phone = phone;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPasword(String password) {
+		this.password = password;
+	}
+	
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPaswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 }
 
