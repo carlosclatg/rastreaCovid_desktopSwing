@@ -13,8 +13,8 @@ import java.util.List;
 //Class to manage the API connection//
 public class ApiConnector {
 
-	 private static final String URL = "http://localhost:8080/api";
-	//private static final String URL = "https://rastreados-bglk23lqpq-lz.a.run.app/api/"; // Conexión Google Cloud
+	//private static final String URL = "http://localhost:8080/api";
+	private static final String URL = "https://rastreados-bglk23lqpq-lz.a.run.app/api"; // Conexión Google Cloud
 	private static final String URL_auth = URL + "/user/auth";
 	private static final String URL_getAllPatients = URL + "/pacients";
 	private static final String URL_getPatientById = URL + "/pacient/";
@@ -334,9 +334,13 @@ public class ApiConnector {
 
 	}
 
-	public static String updatePacient(String token, UpdatePacient updatePacient) {
+	public static String updatePacient(String token, String _id, UpdatePacient updatePacient) 
+	{
+		System.out.println(token);
+		System.out.println(_id);
+		System.out.println(updatePacient.toString());
 		try {
-			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_getPatientById + updatePacient.get_id()))
+			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_getPatientById + _id))
 					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
 					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updatePacient)))
 					.build();
@@ -357,6 +361,7 @@ public class ApiConnector {
 			System.out.println(e.getMessage());
 			return null;
 		}
+		
 	}
 	
 	public static List<CountSintom> getFrequency(String token, String lang) { // lang puede ser cat, eng o es

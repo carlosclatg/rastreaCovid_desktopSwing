@@ -22,8 +22,6 @@ import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-@Getter
-@Setter
 
 //In this class we design and apply logic to the patient window.
 
@@ -36,6 +34,7 @@ public class PatientsScreen {
 	private JTextField searchName;
 	private JLabel lblname;
 	private JTextField searchSurname;
+	
 	private JLabel lblSurname;
 	private JTextField searchPhone;
 	private JLabel lblPhone;
@@ -355,5 +354,38 @@ public class PatientsScreen {
 
 	public void setVisible(boolean b) {
 	}
+	
+	public JTextField getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(JTextField searchName) {
+		this.searchName = searchName;
+	}
+
+	public JTextField getSearchSurname() {
+		return searchSurname;
+	}
+
+	public void setSearchSurname(JTextField searchSurname) {
+		this.searchSurname = searchSurname;
+	}
+
+	public JTextField getSearchPhone() {
+		return searchPhone;
+	}
+
+	public void setSearchPhone(JTextField searchPhone) {
+		this.searchPhone = searchPhone;
+	}
+
+	public JButton getSearchButton() {
+		return searchButton;
+	}
+
+	public void setSearchButton(JButton searchButton) {
+		this.searchButton = searchButton;
+	}
+
 
 }

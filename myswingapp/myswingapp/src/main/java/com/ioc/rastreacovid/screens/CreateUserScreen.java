@@ -241,4 +241,66 @@ public class CreateUserScreen implements ActionListener {
 	public Window getFrame() {
 		return frame;
 	}
+	
+	public JTextField getTname() {
+		return tname;
+	}
+	
+	public void setTname(JTextField tname) {
+		this.tname = tname;
+	}
+	
+	public JTextField getTsurname() {
+		return tsurname;
+	}
+
+	public void setTsurname(JTextField tsurname) {
+		this.tsurname = tsurname;
+	}
+	
+	public JTextField getTemail() {
+		return temail;
+	}
+
+	public void setTemail(JTextField temail) {
+		this.temail = temail;
+	}
+
+	public JTextField getTtlf() {
+		return ttlf;
+	}
+
+	public void setTtlf(JTextField ttlf) {
+		this.ttlf = ttlf;
+	}
+
+	public JTextField getTpass() {
+		return tpass;
+	}
+
+	public void setTpass(JTextField tpass) {
+		this.tpass = tpass;
+	}
+
+	public JTextField getTpassc() {
+		return tpassc;
+	}
+
+	public void setTpassc(JTextField tpassc) {
+		this.tpassc = tpassc;
+	}
+	
+	public JButton getSub() {
+		return sub;
+	}
+
+	public void setSub(JButton sub) {
+		this.sub = sub;
+	}
+
+	public boolean setVisible(boolean b) {
+		return true;
+		// TODO Esbozo de método generado automáticamente
+		
+	}
 }

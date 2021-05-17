@@ -52,6 +52,7 @@ public class UserScreen {
 	private JComboBox searchType;
 	private List<User> users;
 	private Vector fileVector;
+	
 	private Vector columnNames;
 	private String cadenaN;
 	private String cadenaS;
@@ -411,5 +412,13 @@ public class UserScreen {
 
 	public void setVisible(boolean b) {
 	}
+	public Vector getFileVector() {
+		return fileVector;
+	}
+
+	public void setFileVector(Vector fileVector) {
+		this.fileVector = fileVector;
+	}
+
 
 }

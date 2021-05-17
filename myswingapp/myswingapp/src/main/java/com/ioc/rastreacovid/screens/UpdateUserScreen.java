@@ -33,6 +33,7 @@ public class UpdateUserScreen implements ActionListener {
 	private JTextField ttlf;
 	private JLabel pass;
 	private JTextField tpass;
+	
 	private JLabel passc;
 	private JTextField tpassc;
 	private JLabel role;
@@ -228,6 +229,14 @@ public class UpdateUserScreen implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	public JButton getSub() {
+		return sub;
+	}
+
+	public void setSub(JButton sub) {
+		this.sub = sub;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -237,4 +246,30 @@ public class UpdateUserScreen implements ActionListener {
 
 		return frame;
 	}
+	
+	public JTextField getTname() {
+		return tname;
+	}
+
+	public void setTname(JTextField tname) {
+		this.tname = tname;
+	}
+	
+	public JTextField getTpass() {
+		return tpass;
+	}
+
+	public void setTpass(JTextField tpass) {
+		this.tpass = tpass;
+	}
+
+	public JTextField getTpassc() {
+		return tpassc;
+	}
+
+	public void setTpassc(JTextField tpassc) {
+		this.tpassc = tpassc;
+	}
+
+
 }

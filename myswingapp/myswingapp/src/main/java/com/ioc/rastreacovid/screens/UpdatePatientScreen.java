@@ -84,7 +84,7 @@ public class UpdatePatientScreen implements ActionListener {
 		title.setSize(235, 30);
 		title.setLocation(150, 20);
 		frame.getContentPane().add(title);
-		c.fill = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.NORTH;
 		c.gridx = 0;
 		c.gridy = 0;
 		frame.getContentPane().add(title, c);
@@ -322,7 +322,7 @@ public class UpdatePatientScreen implements ActionListener {
 		sub.setBackground(new Color(255, 255, 255));
 		sub.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		sub.setSize(100, 20);
-		sub.setLocation(130, 420);
+		sub.setLocation(250, 520);
 		sub.addActionListener(this);
 		frame.getContentPane().add(sub);
 		sub.addActionListener(new ActionListener() {
@@ -332,15 +332,12 @@ public class UpdatePatientScreen implements ActionListener {
 				UpdatePacient up = new UpdatePacient();
 				List<ContactWithoutId> cwil = new ArrayList<ContactWithoutId>();
 				List<String> ssin = new ArrayList<String>();
-				up.set_id(patient.get_id());
 				up.setName(tname.getText());
 				up.setSurname(tsurname.getText());
 				up.setPhone(Integer.parseInt(ttlf.getText()));
 				up.setPCRDate(new Date().toInstant().getEpochSecond());
 				up.setBirthDate(new Date().toInstant().getEpochSecond());
 			
-			
-				
 				ContactWithoutId cwi = null;
 				for(int i=0;i<contacteJt.length;i++){
 				cwi = new ContactWithoutId();
@@ -353,8 +350,12 @@ public class UpdatePatientScreen implements ActionListener {
 					ssin.add(sintomaJt[i].getText());
 					}
 				up.setSintoms(ssin);
+				System.out.println(ssin);
 				
-				String ok = ApiConnector.updatePacient(token, up);
+				String ok = ApiConnector.updatePacient(token, patient.get_id(), up);
+				
+			
+			
 				
 				
 			/*	List<ContactWithoutId> list = new ArrayList<ContactWithoutId>();
@@ -382,11 +383,11 @@ public class UpdatePatientScreen implements ActionListener {
 
 		frame.setVisible(true);
 
-		c.fill = GridBagConstraints.CENTER;
-		c.ipady = 5;
-		c.weightx = 0.5;
+		c.fill = GridBagConstraints.SOUTH;
+		c.ipady = 6;
+		c.weightx = 1;
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 15;
 		frame.getContentPane().add(sub, c);
 
 	}

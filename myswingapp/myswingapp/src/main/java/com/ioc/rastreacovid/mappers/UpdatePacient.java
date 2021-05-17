@@ -15,10 +15,25 @@ public class UpdatePacient {
 
 	List<ContactWithoutId> contacts;
 	List<String> sintoms;
-	String _id;
 	String name;
 	String surname;
 	Integer phone;
 	long birthDate;
 	long PCRDate;
+	
+
+
+
+@Override
+public String toString() {
+	return "UpdatePacient{" +
+			"contacts=" + contacts +
+			", sintoms=" + sintoms +
+			", name='" + name + '\'' +
+			", surname='" + surname + '\'' +
+			", phone=" + phone +
+			", birthDate=" + birthDate +
+			", PCRDate=" + PCRDate +
+			'}';
+}
 }

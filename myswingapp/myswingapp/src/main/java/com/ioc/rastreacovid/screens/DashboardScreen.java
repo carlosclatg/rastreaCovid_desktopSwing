@@ -31,6 +31,8 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	private JButton usuarisButton;
 	private JButton statisticsButton;
 	private JButton createUserButton;
+	private JButton deletePatientButton;
+	private JButton deleteUserButton;
 	private JButton infoButton;
 	private JTextField txttitle;
 
@@ -85,11 +87,11 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 			}
 		});
 
-		// Button for to delete user.
-		createUserButton = new JButton("Eliminar Pacient");
-		createUserButton.setBounds(17, 260, 200, 50);
-		panel.add(createUserButton);
-		createUserButton.addActionListener(new ActionListener() {
+		// Button for to delete patient.
+		deletePatientButton = new JButton("Eliminar Pacient");
+		deletePatientButton.setBounds(17, 260, 200, 50);
+		panel.add(deletePatientButton);
+		deletePatientButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DeletePatientScreen screen = new DeletePatientScreen();
@@ -123,10 +125,10 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		});
 
 		// Button for to delete user.
-		createUserButton = new JButton("Eliminar Usuari");
-		createUserButton.setBounds(280, 260, 200, 50);
-		panel.add(createUserButton);
-		createUserButton.addActionListener(new ActionListener() {
+		deleteUserButton = new JButton("Eliminar Usuari");
+		deleteUserButton.setBounds(280, 260, 200, 50);
+		panel.add(deleteUserButton);
+		deleteUserButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DeleteUserScreen screen = new DeleteUserScreen();
@@ -231,6 +233,14 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	public JButton getPacientsButton() {
 		return pacientsButton;
 	}
+	
+	public void setCreateUserButton(JButton createUserButton) {
+		this.createUserButton = createUserButton;
+	}
+
+	public JButton getCreateUserButton() {
+		return createUserButton;
+	}
 
 	public void setPacientsButton(JButton pacientsButton) {
 		this.pacientsButton = pacientsButton;
@@ -242,6 +252,22 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 
 	public void setStatisticsButton(JButton statisticsButton) {
 		this.statisticsButton = statisticsButton;
+	}
+	
+	public JButton getDeleteUserButton() {
+		return deleteUserButton;
+	}
+
+	public void setDeleteUserButton(JButton deleteUserButton) {
+		this.deleteUserButton = deleteUserButton;
+	}
+	
+	public JButton getdeletePatientButton() {
+		return deletePatientButton;
+	}
+
+	public void setdeletePatientButton(JButton deletePatientButton) {
+		this.deletePatientButton = deletePatientButton;
 	}
 
 	// Method for generating patient statistics.
