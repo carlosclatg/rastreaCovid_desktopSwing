@@ -3,7 +3,6 @@ package com.ioc.rastreacovid.screens;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.Panel;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,16 +10,15 @@ import java.io.IOException;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.Desktop;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+//Class in which links with information about the coranavirus are added.
 public class InfoScreen {
 
 	private JFrame frame;
-	private Panel panel;
 
 	private JLabel casesLbl;
 	private JButton casesButton;
@@ -57,6 +55,8 @@ public class InfoScreen {
 		whatButton.setBounds(204, 35, 117, 29);
 		frame.getContentPane().add(whatButton);
 		whatButton.addActionListener(new ActionListener() {
+
+			// If clicked, it opens the browser with the reported link.
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().browse(new URI("https://es.wikipedia.org/wiki/COVID-19"));
@@ -78,6 +78,7 @@ public class InfoScreen {
 		casesButton.setBounds(319, 79, 117, 29);
 		frame.getContentPane().add(casesButton);
 		casesButton.addActionListener(new ActionListener() {
+			// If clicked, it opens the browser with the reported link.
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().browse(new URI(
@@ -100,6 +101,7 @@ public class InfoScreen {
 		symButton.setBounds(120, 131, 117, 29);
 		frame.getContentPane().add(symButton);
 		symButton.addActionListener(new ActionListener() {
+			// If clicked, it opens the browser with the reported link.
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().browse(new URI(
@@ -122,6 +124,7 @@ public class InfoScreen {
 		trackerButton.setBounds(171, 179, 117, 29);
 		frame.getContentPane().add(trackerButton);
 		trackerButton.addActionListener(new ActionListener() {
+			// If clicked, it opens the browser with the reported link.
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().browse(new URI(
@@ -140,7 +143,7 @@ public class InfoScreen {
 		frame.getContentPane().add(closeButton);
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				frame.dispose(); // Close the windows.
 			}
 		});
 
@@ -149,4 +152,45 @@ public class InfoScreen {
 	public Window getFrame() {
 		return frame;
 	}
+
+	public JButton getCasesButton() {
+		return casesButton;
+	}
+
+	public void setCasesButton(JButton casesButton) {
+		this.casesButton = casesButton;
+	}
+
+	public JButton getWhatButton() {
+		return whatButton;
+	}
+
+	public void setWhatButton(JButton whatButton) {
+		this.whatButton = whatButton;
+	}
+
+	public JButton getSymButton() {
+		return symButton;
+	}
+
+	public void setSymButton(JButton symButton) {
+		this.symButton = symButton;
+	}
+
+	public JButton getTrackerButton() {
+		return trackerButton;
+	}
+
+	public void setTrackerButton(JButton trackerButton) {
+		this.trackerButton = trackerButton;
+	}
+
+	public JButton getCloseButton() {
+		return closeButton;
+	}
+
+	public void setCloseButton(JButton closeButton) {
+		this.closeButton = closeButton;
+	}
+
 }

@@ -1,14 +1,10 @@
 package com.ioc.rastreacovid.screens;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.EventQueue;
-import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -18,14 +14,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
-import com.ioc.rastreacovid.mappers.Contact;
 import com.ioc.rastreacovid.mappers.Patient;
 import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.mappers.Sintom;
 
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
@@ -33,7 +26,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 
 //In this class we design and apply logic to the patient details window.
-
 public class PatientDetailsScreen {
 
 	private JFrame frame;
@@ -67,18 +59,18 @@ public class PatientDetailsScreen {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1000, 500);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all
-																	// the app
-
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setTitle("Detall del Pacient");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
 
 		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		// Button to update the patient.
+		// ** This part is implemented, but it does not work correctly, the database
+		// gives me an error that I have not been able to correct in time. **//
 		updatePatient = new JButton("Actualitzar Pacient");
 		frame.getContentPane().add(updatePatient, BorderLayout.SOUTH);
-
 		updatePatient.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -104,8 +96,10 @@ public class PatientDetailsScreen {
 
 				p.setSintoms(sintoms);
 				p.setContacts(contacts);
-				// p.setSintoms(patientdetail.getSintoms());
-				// p.setContacts(patientdetail.getSintoms());
+				// p.setSintoms(patientdetail.getSintoms()); ** Part of the development to be
+				// able to update the patient, but without success. **
+				// p.setContacts(patientdetail.getSintoms()); ** Part of the development to be
+				// able to update the patient, but without success. **
 
 				UpdatePatientScreen screen = new UpdatePatientScreen(p);
 				// screen.getFrame().setVisible(true);

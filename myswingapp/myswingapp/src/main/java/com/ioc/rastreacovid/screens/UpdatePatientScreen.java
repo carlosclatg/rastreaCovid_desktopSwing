@@ -16,17 +16,17 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.ContactWithoutId;
 import com.ioc.rastreacovid.mappers.Patient;
+import com.ioc.rastreacovid.mappers.Sintom;
 import com.ioc.rastreacovid.mappers.UpdatePacient;
-import com.ioc.rastreacovid.mappers.User;
-import com.ioc.rastreacovid.mappers.UserPost;
-import java.awt.BorderLayout;
+
+//In this class the necessary logic has been generated to be able to update the patients that already exist in the DB with the necessary data.
+//** Aquesta classe no termina de funcionar correctamente ja que m'he trobat un error a última hora impossible d'arreglar a temps, es un error que em retonar la BBDD **//
 
 public class UpdatePatientScreen implements ActionListener {
 
@@ -47,15 +47,12 @@ public class UpdatePatientScreen implements ActionListener {
 	private JTextField[] sintomaJt;
 	private JTextField[] contacteJt;
 
-	private JRadioButton admin;
-	private JRadioButton rastreator;
-	private ButtonGroup rolegp;
+	private String id;
+
 	private JButton sub;
 	private JLabel res;
 	private JFrame frame;
 	private Patient patient;
-
-	private String rolselected;
 
 	public UpdatePatientScreen(Patient patient) {
 		initialize(patient);
@@ -65,7 +62,6 @@ public class UpdatePatientScreen implements ActionListener {
 
 	public void initialize(Patient patient) {
 		GridBagConstraints c = new GridBagConstraints();
-
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
@@ -84,6 +80,8 @@ public class UpdatePatientScreen implements ActionListener {
 		title.setSize(235, 30);
 		title.setLocation(150, 20);
 		frame.getContentPane().add(title);
+
+		// We define the position of the frame elements.
 		c.fill = GridBagConstraints.NORTH;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -202,9 +200,9 @@ public class UpdatePatientScreen implements ActionListener {
 		int ultimgridY = 0;
 		int ultimYLocation = 0;
 
+		// Pick up the symptoms and place them in the window
 		sintomaJt = new JTextField[patient.getSintoms().size()];
 		for (int i = 0; i < patient.getSintoms().size(); i++) {
-
 			sintomsLbl = new JLabel("Símptoma " + (i + 1));
 			sintomsLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 			sintomsLbl.setSize(100, 20);
@@ -214,8 +212,6 @@ public class UpdatePatientScreen implements ActionListener {
 			c.gridx = 0;
 			c.gridy = 6 + i;
 			frame.getContentPane().add(sintomsLbl, c);
-
-			// sintomaJt
 
 			sintomaJt[i] = new JTextField();
 			sintomaJt[i].setText(patient.getSintoms().get(i));
@@ -229,8 +225,10 @@ public class UpdatePatientScreen implements ActionListener {
 			ultimgridY = c.gridy;
 			ultimYLocation = 240 + ((i + 1) * 40);
 			frame.getContentPane().add(sintomaJt[i], c);
+
 		}
 
+		// Pick up the contacts and place them in the window
 		contacteJt = new JTextField[patient.getContacts().size()];
 		for (int i = 0; i < patient.getContacts().size(); i++) {
 
@@ -243,8 +241,6 @@ public class UpdatePatientScreen implements ActionListener {
 			c.gridx = 0;
 			c.gridy = ultimgridY + (i + 1);
 			frame.getContentPane().add(contactesLbl, c);
-
-			// sintomaJt
 
 			contacteJt[i] = new JTextField();
 			contacteJt[i].setText(patient.getContacts().get(i));
@@ -260,10 +256,10 @@ public class UpdatePatientScreen implements ActionListener {
 
 		}
 
-		// contacteJt
+		// ** Part de les diverses proves realitzades sense éxit ** //
 		/*
-		 * String[] sintomas = new String[patient.getSintoms().size()]; for (int i = 0;
-		 * i < patient.getSintoms().size(); i++) {
+		 * // contacteJt /* String[] sintomas = new String[patient.getSintoms().size()];
+		 * for (int i = 0; i < patient.getSintoms().size(); i++) {
 		 * 
 		 * sintomsLbl = new JLabel("Contacte "+i); sintomsLbl.setFont(new
 		 * Font("Lucida Grande", Font.PLAIN, 15)); sintomsLbl.setSize(100, 20);
@@ -318,6 +314,7 @@ public class UpdatePatientScreen implements ActionListener {
 
 		// frame.getContentPane().add(sintomas, c);
 
+		// Button to update changes
 		sub = new JButton("Actualitzar");
 		sub.setBackground(new Color(255, 255, 255));
 		sub.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -328,7 +325,6 @@ public class UpdatePatientScreen implements ActionListener {
 		sub.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				UpdatePacient up = new UpdatePacient();
 				List<ContactWithoutId> cwil = new ArrayList<ContactWithoutId>();
 				List<String> ssin = new ArrayList<String>();
@@ -337,44 +333,37 @@ public class UpdatePatientScreen implements ActionListener {
 				up.setPhone(Integer.parseInt(ttlf.getText()));
 				up.setPCRDate(new Date().toInstant().getEpochSecond());
 				up.setBirthDate(new Date().toInstant().getEpochSecond());
-			
+
 				ContactWithoutId cwi = null;
-				for(int i=0;i<contacteJt.length;i++){
-				cwi = new ContactWithoutId();
-				cwi.setName(contacteJt[i].getText());
-				cwil.add(cwi);
+				for (int i = 0; i < contacteJt.length; i++) {
+					cwi = new ContactWithoutId();
+					cwi.setName(contacteJt[i].getText());
+					cwil.add(cwi);
 				}
 				up.setContacts(cwil);
-				
-				for(int i=0;i<sintomaJt.length;i++){
+
+				for (int i = 0; i < sintomaJt.length; i++) {
 					ssin.add(sintomaJt[i].getText());
-					}
+				}
 				up.setSintoms(ssin);
-				System.out.println(ssin);
-				
 				String ok = ApiConnector.updatePacient(token, patient.get_id(), up);
-				
-			
-			
-				
-				
-			/*	List<ContactWithoutId> list = new ArrayList<ContactWithoutId>();
-				up.setContacts(list);
-				List<String> listsintoms = new ArrayList<String>();
-				listsintoms.add("60684bcdc609df2b79a8879d");
-				up.setSintoms(listsintoms);
-				String ok = ApiConnector.updatePacient(token, "6099879ed175851f8b512e1d", updatePacient);
 
-				UserPost up = new UserPost();
-				up.setName(tname.getText());
-				up.setSurname(tsurname.getText());
-				up.setPhone(Integer.parseInt(ttlf.getText()));
-				// ApiConnector.updateUser(token, up);
-*/
-			
-			}	
+				// ** Part de les diverses proves realitzades sense éxit ** //
+				/*
+				 * /* List<ContactWithoutId> list = new ArrayList<ContactWithoutId>();
+				 * up.setContacts(list); List<String> listsintoms = new ArrayList<String>();
+				 * listsintoms.add("60684bcdc609df2b79a8879d"); up.setSintoms(listsintoms);
+				 * String ok = ApiConnector.updatePacient(token, "6099879ed175851f8b512e1d",
+				 * updatePacient);
+				 * 
+				 * UserPost up = new UserPost(); up.setName(tname.getText());
+				 * up.setSurname(tsurname.getText());
+				 * up.setPhone(Integer.parseInt(ttlf.getText())); //
+				 * ApiConnector.updateUser(token, up);
+				 */
+
+			}
 		});
-
 		res = new JLabel("");
 		res.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		res.setSize(500, 25);

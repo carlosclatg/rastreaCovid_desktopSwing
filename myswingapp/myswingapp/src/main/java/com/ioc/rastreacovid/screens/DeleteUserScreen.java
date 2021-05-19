@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -22,18 +21,14 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableColumn;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.DeleteUser;
-import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.mappers.User;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
-
+//Window to delete a user from our application.
 public class DeleteUserScreen {
 
 	private JFrame frame;
@@ -74,12 +69,12 @@ public class DeleteUserScreen {
 
 	public void initialize() {
 		GridBagConstraints c = new GridBagConstraints();
-
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+		// Variables used to search the list.
 		searchName = new JTextField(cadenaN != null ? cadenaN : "");
 		searchSurname = new JTextField(cadenaS != null ? cadenaS : "");
 		searchEmail = new JTextField(cadenaE != null ? cadenaE : "");
@@ -91,6 +86,7 @@ public class DeleteUserScreen {
 		doubleClick.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		frame.setLayout(new GridBagLayout());
 
+		// We define the position of the frame elements.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -136,6 +132,7 @@ public class DeleteUserScreen {
 
 		users = new ArrayList();
 
+		// Logic to search by the indicated parameters.
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -238,6 +235,7 @@ public class DeleteUserScreen {
 		JScrollPane jScrollPane = new JScrollPane(table);
 		jScrollPane.setVisible(true);
 
+		// We define the position of the table.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 300; // make this component tall
 		c.weightx = 0.0;
@@ -255,6 +253,8 @@ public class DeleteUserScreen {
 		frame.getContentPane().add(searchButton, c);
 	}
 
+	// Method to perform the search within the list and to be able to filter
+	// according to the conditions indicated.
 	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraEmail, CharSequence csn,
 			CharSequence css, CharSequence cse) {
 		Vector fileVector = new Vector();

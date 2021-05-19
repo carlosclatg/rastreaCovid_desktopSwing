@@ -19,6 +19,7 @@ import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.UpdateUser;
 import com.ioc.rastreacovid.mappers.User;
 
+//In this class the necessary logic has been generated to be able to update the users that already exist in the DB with the necessary data.
 public class UpdateUserScreen implements ActionListener {
 
 	// Components of the Form
@@ -33,7 +34,7 @@ public class UpdateUserScreen implements ActionListener {
 	private JTextField ttlf;
 	private JLabel pass;
 	private JTextField tpass;
-	
+
 	private JLabel passc;
 	private JTextField tpassc;
 	private JLabel role;
@@ -178,6 +179,7 @@ public class UpdateUserScreen implements ActionListener {
 		else
 			admin.setSelected(true);
 
+		// Button to accept the changes.
 		sub = new JButton("Actualitzar");
 		sub.setBackground(new Color(255, 255, 255));
 		sub.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -246,7 +248,7 @@ public class UpdateUserScreen implements ActionListener {
 
 		return frame;
 	}
-	
+
 	public JTextField getTname() {
 		return tname;
 	}
@@ -254,7 +256,7 @@ public class UpdateUserScreen implements ActionListener {
 	public void setTname(JTextField tname) {
 		this.tname = tname;
 	}
-	
+
 	public JTextField getTpass() {
 		return tpass;
 	}
@@ -270,6 +272,5 @@ public class UpdateUserScreen implements ActionListener {
 	public void setTpassc(JTextField tpassc) {
 		this.tpassc = tpassc;
 	}
-
 
 }

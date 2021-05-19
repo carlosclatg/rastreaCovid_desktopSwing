@@ -13,8 +13,9 @@ import java.util.List;
 //Class to manage the API connection//
 public class ApiConnector {
 
-	//private static final String URL = "http://localhost:8080/api";
-	private static final String URL = "https://rastreados-bglk23lqpq-lz.a.run.app/api"; // Conexión Google Cloud
+	private static final String URL = "http://localhost:8080/api";
+	// private static final String URL =
+	// "https://rastreados-bglk23lqpq-lz.a.run.app/api"; // Conexión Google Cloud
 	private static final String URL_auth = URL + "/user/auth";
 	private static final String URL_getAllPatients = URL + "/pacients";
 	private static final String URL_getPatientById = URL + "/pacient/";
@@ -184,6 +185,7 @@ public class ApiConnector {
 		}
 	}
 
+	// Method to delete user from the application
 	public static String deleteUser(String token, String email) { //
 		try {
 
@@ -211,39 +213,13 @@ public class ApiConnector {
 		}
 
 	}
-	
-	
+
+	// Method to update user from the application
 	public static String updateUser(String token, UpdateUser updateUser) {
 		try {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_updateUser))
 					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
-					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updateUser)))
-					.build();
-			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-					HttpResponse.BodyHandlers.ofString());
-
-			System.out.println(response.statusCode());
-			System.out.println(response.body());
-			switch (response.statusCode()) {
-				case (200):
-					Gson g = new Gson();
-					return g.fromJson(response.body(), Id.class).getId();
-				default:
-					return null;
-			}
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-
-	// Method for the creation of patients in the application.
-	public static Id postPacient(String token, PatientPost patientPost) {
-		try {
-			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_postPatient))
-					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
-					.POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(patientPost))).build();
+					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updateUser))).build();
 			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
 					HttpResponse.BodyHandlers.ofString());
 
@@ -252,7 +228,7 @@ public class ApiConnector {
 			switch (response.statusCode()) {
 			case (200):
 				Gson g = new Gson();
-				return g.fromJson(response.body(), Id.class);
+				return g.fromJson(response.body(), Id.class).getId();
 			default:
 				return null;
 			}
@@ -261,24 +237,9 @@ public class ApiConnector {
 			System.out.println(e.getMessage());
 			return null;
 		}
-		/**
-		 * Ejemplo de creación de PatientPost: PatientPost pp = new PatientPost();
-		 * pp.setName("Carlos"); pp.setSurname("Calvo"); pp.setBirthDate(1000000);
-		 * pp.setPhone(890765123); pp.setPCRDate(10000000); List<String> sin = new
-		 * ArrayList<String>(); sin.add("60684ba4c609df2b79a8879c"); //los obtienes de
-		 * hacer un getsintoms sin.add("606b104c0216041e56299365");
-		 * sin.add("60684c70c609df2b79a887a0"); pp.setSintoms(sin); pp.setContacts(new
-		 * ArrayList<ContactWithoutId>()); List<ContactWithoutId> contacts = new
-		 * ArrayList<ContactWithoutId>(); contacts.add(new ContactWithoutId("Donald",
-		 * "Trump", 666888111)); pp.setContacts(contacts);
-		 * ApiConnector.postPacient(token, pp);
-		 */
 	}
 
-	// ** TODO NEXT SPRINT ** //
-
-	// lang can be cat, eng or es depending on the language of the app, by default
-	// cat.
+	// Method for obtaining patients' symptoms
 	public static List<Sintom> getAllSintoms(String token, String lang) {
 		try {
 			if (lang == null)
@@ -304,8 +265,6 @@ public class ApiConnector {
 			return null;
 		}
 	}
-
-	// ** TODO NEXT SPRINT ** //
 
 	// Method for delete of patients in the application.
 	public static String deletePatient(String token, String pacientId) { // pacientid is the _id
@@ -334,39 +293,37 @@ public class ApiConnector {
 
 	}
 
-	public static String updatePacient(String token, String _id, UpdatePacient updatePacient) 
-	{
+	// Method to update user from the application
+	public static String updatePacient(String token, String _id, UpdatePacient updatePacient) {
 		System.out.println(token);
 		System.out.println(_id);
 		System.out.println(updatePacient.toString());
 		try {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_getPatientById + _id))
 					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token)
-					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updatePacient)))
-					.build();
+					.PUT(HttpRequest.BodyPublishers.ofString(new Gson().toJson(updatePacient))).build();
 			HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
 					HttpResponse.BodyHandlers.ofString());
 
 			System.out.println(response.statusCode());
 			System.out.println(response.body());
 			switch (response.statusCode()) {
-				case (200):
-					Gson g = new Gson();
-					return g.fromJson(response.body(), Id.class).getId();
-				default:
-					return null;
+			case (200):
+				Gson g = new Gson();
+				return g.fromJson(response.body(), Id.class).getId();
+			default:
+				return null;
 			}
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
-		
+
 	}
-	
-	public static List<CountSintom> getFrequency(String token, String lang) { // lang puede ser cat, eng o es
-																				// dependiendo del idioma de la app. Por
-																				// defecto cat.
+
+	// Method to count patients' symptoms, and to be used for statistics.
+	public static List<CountSintom> getFrequency(String token, String lang) {
 		try {
 			if (lang == null)
 				lang = LANG_CAT;
@@ -392,8 +349,8 @@ public class ApiConnector {
 		}
 	}
 
-	public static List<Stats> getStats(String token) { // lang puede ser cat, eng o es dependiendo del idioma de la app.
-														// Por defecto cat.
+	// Method used for patient statistics.
+	public static List<Stats> getStats(String token) {
 		try {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(URL_getStats))
 					.header("Content-Type", "application/json").setHeader("Authorization", "Bearer " + token).GET()

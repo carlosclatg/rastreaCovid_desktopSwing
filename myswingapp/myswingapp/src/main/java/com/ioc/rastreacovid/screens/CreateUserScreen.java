@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
+//Window to create a user in our application with the necessary data.
 public class CreateUserScreen implements ActionListener {
 
 	// Components of the Form
@@ -48,14 +49,13 @@ public class CreateUserScreen implements ActionListener {
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
-
 		frame.setTitle("Creació d'usuari");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
-
 		frame.setTitle("Creació d'usuari");
 		frame.setBounds(300, 90, 500, 500);
 
+		// Components for the form of creation user.
 		title = new JLabel("Creació d'usuari");
 		title.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
 		title.setSize(235, 30);
@@ -183,6 +183,7 @@ public class CreateUserScreen implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	// Button actions "Aceptar" & "Reset"
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == reset) {
 			String def = "";
@@ -208,6 +209,7 @@ public class CreateUserScreen implements ActionListener {
 			}
 		}
 
+		// We report for data to keep them
 		String sname = tname.getText();
 		String ssurname = tsurname.getText();
 		String semail = temail.getText();
@@ -241,15 +243,15 @@ public class CreateUserScreen implements ActionListener {
 	public Window getFrame() {
 		return frame;
 	}
-	
+
 	public JTextField getTname() {
 		return tname;
 	}
-	
+
 	public void setTname(JTextField tname) {
 		this.tname = tname;
 	}
-	
+
 	public JTextField getTsurname() {
 		return tsurname;
 	}
@@ -257,7 +259,7 @@ public class CreateUserScreen implements ActionListener {
 	public void setTsurname(JTextField tsurname) {
 		this.tsurname = tsurname;
 	}
-	
+
 	public JTextField getTemail() {
 		return temail;
 	}
@@ -289,7 +291,7 @@ public class CreateUserScreen implements ActionListener {
 	public void setTpassc(JTextField tpassc) {
 		this.tpassc = tpassc;
 	}
-	
+
 	public JButton getSub() {
 		return sub;
 	}
@@ -298,9 +300,17 @@ public class CreateUserScreen implements ActionListener {
 		this.sub = sub;
 	}
 
+	public JButton getReset() {
+		return reset;
+	}
+
+	public void setReset(JButton reset) {
+		this.reset = reset;
+	}
+
 	public boolean setVisible(boolean b) {
 		return true;
 		// TODO Esbozo de método generado automáticamente
-		
+
 	}
 }

@@ -9,6 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+
+// Class to obtain symptoms.
+//Generation of getters & setters.
+
 public class CountSintom {
 	String _id;
 

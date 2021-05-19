@@ -2,20 +2,11 @@ package com.ioc.rastreacovid.screens;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
 
-import com.ioc.rastreacovid.mappers.Patient;
-import com.ioc.rastreacovid.mappers.PatientDetail;
 import com.ioc.rastreacovid.mappers.User;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -24,21 +15,11 @@ import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import javax.swing.text.JTextComponent;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.List;
-import java.util.Vector;
-import java.util.prefs.Preferences;
-
+//Window to display a list of the users of our application.
 public class UserScreen {
 
 	private JFrame frame;
-	private Panel panel;
 	private JTable table;
 	private JTextField searchName;
 	private JLabel lblname;
@@ -52,12 +33,10 @@ public class UserScreen {
 	private JComboBox searchType;
 	private List<User> users;
 	private Vector fileVector;
-	
 	private Vector columnNames;
 	private String cadenaN;
 	private String cadenaS;
 	private String cadenaE;
-	private JLabel title;
 
 	public UserScreen() {
 
@@ -81,8 +60,8 @@ public class UserScreen {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 		frame.getContentPane().setBackground(new Color(92, 255, 208));
 		frame.setBounds(100, 100, 1050, 500);
-		
-		
+
+		// Variables used to search the list.
 		searchName = new JTextField(cadenaN != null ? cadenaN : "");
 		searchSurname = new JTextField(cadenaS != null ? cadenaS : "");
 		searchEmail = new JTextField(cadenaE != null ? cadenaE : "");
@@ -90,16 +69,16 @@ public class UserScreen {
 		lblSurname = new JLabel("Buscar per cognom:");
 		lblEmail = new JLabel("Buscar per email:");
 		lblType = new JLabel("Buscar per rol:");
-		
-		doubleClick = new JLabel ("Fes doble click per actualizar un usuari");
+
+		doubleClick = new JLabel("Fes doble click per actualizar un usuari");
 		doubleClick.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		
 
 		searchType = new JComboBox();
 		searchType.addItem("Admin");
 		searchType.addItem("Rastreator");
 		frame.setLayout(new GridBagLayout());
 
+		// We define the position of the frame elements.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -143,13 +122,11 @@ public class UserScreen {
 		c.gridx = 1;
 		c.gridy = 3;
 		frame.getContentPane().add(searchType, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
 		frame.getContentPane().add(doubleClick, c);
-		
-
 
 		searchName.setColumns(10);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
@@ -158,6 +135,7 @@ public class UserScreen {
 
 		users = new ArrayList();
 
+		// Logic to search by the indicated parameters.
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -220,14 +198,13 @@ public class UserScreen {
 
 		// Define the table
 		table = new JTable(fileVector, columnNames);
-
-		// JTable table = new JTable();
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(true); // Functionality to be able to sort the column.
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
+
 				// If you double click update user
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
@@ -261,6 +238,7 @@ public class UserScreen {
 		JScrollPane jScrollPane = new JScrollPane(table);
 		jScrollPane.setVisible(true);
 
+		// We define the position of the table.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 300; // make this component tall
 		c.weightx = 0.0;
@@ -278,6 +256,8 @@ public class UserScreen {
 
 	}
 
+	// Method to perform the search within the list and to be able to filter
+	// according to the conditions indicated.
 	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraEmail, CharSequence csn,
 			CharSequence css, CharSequence cse) {
 		Vector fileVector = new Vector();
@@ -412,6 +392,7 @@ public class UserScreen {
 
 	public void setVisible(boolean b) {
 	}
+
 	public Vector getFileVector() {
 		return fileVector;
 	}
@@ -420,5 +401,28 @@ public class UserScreen {
 		this.fileVector = fileVector;
 	}
 
+	public JTextField getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(JTextField searchName) {
+		this.searchName = searchName;
+	}
+
+	public JTextField getSearchEmail() {
+		return searchEmail;
+	}
+
+	public void setSearchEmail(JTextField searchEmail) {
+		this.searchEmail = searchEmail;
+	}
+
+	public JButton getSearchButton() {
+		return searchButton;
+	}
+
+	public void setSearchButton(JButton searchButton) {
+		this.searchButton = searchButton;
+	}
 
 }

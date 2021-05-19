@@ -12,11 +12,8 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,10 +27,10 @@ import com.ioc.rastreacovid.communication.ApiConnector;
 import com.ioc.rastreacovid.mappers.CountSintom;
 import com.ioc.rastreacovid.mappers.Stats;
 
+//Class to be able to show the different patient statistics and symptoms.
 public class StatisticsScreen {
 
 	private JFrame frame;
-	private Panel panel;
 	private JButton frequencyButton;
 	private JButton statsButton;
 	private JButton statsPButton;
@@ -61,6 +58,7 @@ public class StatisticsScreen {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 		frame.setTitle("Estadístiques");
 
+		// Button to display the graph of the frequency of the symptoms.
 		frequencyButton = new JButton("Freqüència de Símptomes");
 		frequencyButton.setBounds(148, 282, 200, 50);
 		panel.add(frequencyButton);
@@ -77,6 +75,7 @@ public class StatisticsScreen {
 			}
 		});
 
+		// Button to display the graph of symptom statistics
 		statsButton = new JButton("Estadístiques de Símptomes");
 		statsButton.setBounds(148, 282, 200, 50);
 		panel.add(statsButton);
@@ -92,7 +91,7 @@ public class StatisticsScreen {
 
 			}
 		});
-
+		// Button to display the graph of patients statistics
 		statsPButton = new JButton("Estadístiques de Pacients");
 		statsPButton.setBounds(148, 282, 200, 50);
 		panel.add(statsPButton);
@@ -110,6 +109,7 @@ public class StatisticsScreen {
 		});
 	}
 
+	// Method that generates the symptom frequency chart.
 	private void generatefrequencySintoms(JFrame frame, String token) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		System.out.println("g");
@@ -126,6 +126,7 @@ public class StatisticsScreen {
 
 	}
 
+	// Method that generates patient statistics graphs.
 	private void generateStatsPacients(JFrame frame, String token) {
 		List<Stats> stats = ApiConnector.getStats(token);
 		if (stats != null && stats.size() > 0) {
@@ -134,8 +135,7 @@ public class StatisticsScreen {
 			stats.forEach(x -> {
 				listcontacts.add(x.getNcontacts().doubleValue());
 			});
-			dataset.addSeries("Nº de contactes", listcontacts.stream().mapToDouble(Double::doubleValue).toArray(),
-					20);
+			dataset.addSeries("Nº de contactes", listcontacts.stream().mapToDouble(Double::doubleValue).toArray(), 20);
 			JFreeChart chart = ChartFactory.createHistogram("Número de Contactes per Pacient", "Número de Contactes",
 					"Número de Pacients", dataset);
 			ChartPanel cp = new ChartPanel(chart);
@@ -143,6 +143,7 @@ public class StatisticsScreen {
 		}
 	}
 
+	// Method that generates symptoms statistics graphs.
 	private void generateStatsSintoms(JFrame frame, String token) {
 		List<Stats> stats = ApiConnector.getStats(token);
 		if (stats != null && stats.size() > 0) {
@@ -159,7 +160,6 @@ public class StatisticsScreen {
 		}
 	}
 
-	
 	private Container getContentPane() {
 		return null;
 	}
@@ -172,6 +172,30 @@ public class StatisticsScreen {
 		return frame;
 	}
 
+	public JButton getFrequencyButton() {
+		return frequencyButton;
+	}
+
+	public void setFrequencyButton(JButton frequencyButton) {
+		this.frequencyButton = frequencyButton;
+	}
+
+	public JButton getStatsButton() {
+		return statsButton;
+	}
+
+	public void setStatsButton(JButton statsButton) {
+		this.statsButton = statsButton;
+	}
+
+	public JButton getStatsPButton() {
+		return statsPButton;
+	}
+
+	public void setStatsPButton(JButton statsPButton) {
+		this.statsPButton = statsPButton;
+	}
+
 	private static XYDataset createDataset() {
 
 		DefaultXYDataset ds = new DefaultXYDataset();
@@ -181,5 +205,10 @@ public class StatisticsScreen {
 		ds.addSeries("series1", data);
 
 		return ds;
+	}
+
+	public void setSize(int i, int j) {
+		// TODO Esbozo de método generado automáticamente
+
 	}
 }

@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-// *** TODO NEXT SPRINT *** //
 
 // In this class we start all the data we need from the contacts without ID, so that we can later display them with information
 // Generation of getters & setters

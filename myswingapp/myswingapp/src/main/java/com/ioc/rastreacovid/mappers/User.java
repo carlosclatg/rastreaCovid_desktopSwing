@@ -5,10 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
-
-
 @AllArgsConstructor
 @Getter
 @Setter
@@ -16,7 +12,6 @@ import java.util.List;
 
 // We set and get information user and then display them
 // Generation of getters & setters
-
 
 public class User {
 	String _id;
@@ -30,9 +25,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User{" + "_id=" + _id + ", name=" + name + ", surname=" + surname + " email=" + email + ", type='" + type + '\'' + ", phone='" + phone + '}';
+		return "User{" + "_id=" + _id + ", name=" + name + ", surname=" + surname + " email=" + email + ", type='"
+				+ type + '\'' + ", phone='" + phone + '}';
 	}
-	
+
 	public String get_id() {
 		return _id;
 	}
@@ -40,8 +36,7 @@ public class User {
 	public void set_Id(String _id) {
 		this._id = _id;
 	}
-	
-	
+
 	public String getName() {
 		return name;
 	}
@@ -81,7 +76,7 @@ public class User {
 	public void setPhone(Integer phone) {
 		this.phone = phone;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -89,7 +84,7 @@ public class User {
 	public void setPasword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
@@ -98,5 +93,3 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 }
-
-	

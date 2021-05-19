@@ -20,10 +20,8 @@ import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 
-
-//In this class we design and apply logic to the patient window.
+//In this class we design and apply logic to the patient window, to display them in a searchable list.
 
 public class PatientsScreen {
 
@@ -34,7 +32,7 @@ public class PatientsScreen {
 	private JTextField searchName;
 	private JLabel lblname;
 	private JTextField searchSurname;
-	
+
 	private JLabel lblSurname;
 	private JTextField searchPhone;
 	private JLabel lblPhone;
@@ -72,18 +70,18 @@ public class PatientsScreen {
 		frame.setTitle("Llista de pacients");
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 		String token = prefs.get("token", "token");
-		
+
 		searchName = new JTextField(cadenaN != null ? cadenaN : "");
 		searchSurname = new JTextField(cadenaS != null ? cadenaS : "");
 		searchPhone = new JTextField(cadenaP != null ? cadenaP : "");
 		lblname = new JLabel("Buscar per nom:");
 		lblSurname = new JLabel("Buscar per cognom:");
 		lblPhone = new JLabel("Buscar per telèfon:");
-		doubleClick = new JLabel ("Fes doble click per veure el detall del pacient");
+		doubleClick = new JLabel("Fes doble click per veure el detall del pacient");
 		doubleClick.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		frame.setLayout(new GridBagLayout());
-		
-		
+
+		// We define the position of the frame elements.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -116,20 +114,20 @@ public class PatientsScreen {
 		c.gridx = 1;
 		c.gridy = 2;
 		frame.getContentPane().add(searchPhone, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
 		frame.getContentPane().add(doubleClick, c);
-		
 
 		searchName.setColumns(10);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 
 		searchButton = new JButton("Buscar");
-		
+
 		patients = new ArrayList();
-		
+
+		// Logic to search by the indicated parameters.
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +138,7 @@ public class PatientsScreen {
 				CharSequence csn = searchName.getText(); // String is already a CharSequence
 				CharSequence css = searchSurname.getText();
 				CharSequence csp = searchPhone.getText();
-				
+
 				if (csn.length() > 0)
 					filtraNom = true;
 				if (css.length() > 0)
@@ -156,7 +154,7 @@ public class PatientsScreen {
 
 			}
 		});
-		
+
 		frame.setTitle("Llista de Pacients");
 
 		// We will display the patients in a list with the columns corresponding to the
@@ -171,7 +169,8 @@ public class PatientsScreen {
 		columnNames.add("Data PCR");
 		columnNames.add("Nº de Contactes");
 		columnNames.add("Nº de Símptones");
-		
+
+		// Consult the existing patients and list them with columns
 		if (fileVector == null || (fileVector != null && fileVector.size() == 0)) {
 			fileVector = new Vector();
 			patients = ApiConnector.getAllPatients(token);
@@ -191,21 +190,23 @@ public class PatientsScreen {
 
 			});
 		}
-		
+
 		// Define the table
 		table = new JTable(fileVector, columnNames);
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(true); // Functionality to be able to sort the column.
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
+
 				// If you double click it shows the symptoms in the new window
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
 					System.out.println(token);
-					PatientDetail detail = ApiConnector.getPacientById(token, (String) table.getValueAt(table.getSelectedRow(), 0));
+					PatientDetail detail = ApiConnector.getPacientById(token,
+							(String) table.getValueAt(table.getSelectedRow(), 0));
 					PatientDetailsScreen pds = new PatientDetailsScreen(detail);
 					pds.getFrame().setVisible(true);
 				}
@@ -222,7 +223,8 @@ public class PatientsScreen {
 		table.setSelectionBackground(Color.blue);
 		JScrollPane jScrollPane = new JScrollPane(table);
 		jScrollPane.setVisible(true);
-		
+
+		// We define the position of the table.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 300; // make this component tall
 		c.weightx = 0.0;
@@ -230,7 +232,7 @@ public class PatientsScreen {
 		c.gridx = 0;
 		c.gridy = 4;
 		frame.getContentPane().add(jScrollPane, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 10;
 		c.weightx = 0.5;
@@ -239,6 +241,8 @@ public class PatientsScreen {
 		frame.getContentPane().add(searchButton, c);
 	}
 
+	// Method to perform the search within the list and to be able to filter
+	// according to the conditions indicated.
 	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraTlf, CharSequence csn,
 			CharSequence css, CharSequence csp) {
 		Vector fileVector = new Vector();
@@ -354,7 +358,7 @@ public class PatientsScreen {
 
 	public void setVisible(boolean b) {
 	}
-	
+
 	public JTextField getSearchName() {
 		return searchName;
 	}
@@ -386,6 +390,5 @@ public class PatientsScreen {
 	public void setSearchButton(JButton searchButton) {
 		this.searchButton = searchButton;
 	}
-
 
 }

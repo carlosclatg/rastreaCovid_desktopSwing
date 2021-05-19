@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableColumn;
 
 import com.ioc.rastreacovid.communication.ApiConnector;
 
@@ -30,9 +29,7 @@ import com.ioc.rastreacovid.mappers.Patient;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
-
+//Window to delete a patient from our application.
 public class DeletePatientScreen {
 
 	private JFrame frame;
@@ -79,6 +76,7 @@ public class DeletePatientScreen {
 		frame.setBounds(100, 100, 1050, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close, otherwise closes all the app
 
+		// Variables used to search the list.
 		searchName = new JTextField(cadenaN != null ? cadenaN : "");
 		searchSurname = new JTextField(cadenaS != null ? cadenaS : "");
 		searchPhone = new JTextField(cadenaP != null ? cadenaP : "");
@@ -90,6 +88,7 @@ public class DeletePatientScreen {
 		doubleClick.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		frame.setLayout(new GridBagLayout());
 
+		// We define the position of the frame elements.
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -135,6 +134,7 @@ public class DeletePatientScreen {
 
 		patients = new ArrayList();
 
+		// Logic to search by the indicated parameters.
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -202,15 +202,14 @@ public class DeletePatientScreen {
 
 // Define the table
 		table = new JTable(fileVector, columnNames);
-		table.setAutoCreateRowSorter(true);
-
+		table.setAutoCreateRowSorter(true); // Functionality to be able to sort the column.
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table = (JTable) mouseEvent.getSource();
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
 
-				// If you double click deletes a user.
+				// If you double click deletes a patient.
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
 					String token = prefs.get("token", "token");
@@ -229,7 +228,7 @@ public class DeletePatientScreen {
 			}
 		});
 
-// We define the table format
+		// We define the table format
 		table.setDefaultEditor(Object.class, null);
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(true);
@@ -257,6 +256,8 @@ public class DeletePatientScreen {
 		frame.getContentPane().add(searchButton, c);
 	}
 
+	// Method to perform the search within the list and to be able to filter
+	// according to the conditions indicated.
 	private Vector filtrar(boolean filtraNom, boolean filtraCognom, boolean filtraPhone, CharSequence csn,
 			CharSequence css, CharSequence cse) {
 		Vector fileVector = new Vector();

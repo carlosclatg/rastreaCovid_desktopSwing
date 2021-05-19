@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-//*** TODO NEXT SPRINT *** //
-
 // Generation of getters & setters
 
 public class Id {

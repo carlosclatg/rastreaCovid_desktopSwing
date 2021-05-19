@@ -1,13 +1,5 @@
 package com.ioc.rastreacovid.screens;
 
-import com.ioc.rastreacovid.communication.ApiConnector;
-import com.ioc.rastreacovid.mappers.CountSintom;
-import com.ioc.rastreacovid.mappers.Stats;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYDataset;
 
@@ -17,8 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.prefs.Preferences;
 
 //In this class we design and apply the logic to the dashboard of our application
@@ -143,7 +133,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 		tokenLabel.setText(token);
 		tokenLabel.setVisible(false);
 		panel.add(tokenLabel);
-		
+
 		// Button for to info.
 		infoButton = new JButton("I");
 		infoButton.setBounds(351, 19, 35, 35);
@@ -194,7 +184,6 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	}
 
 	// Action to return to the login window.
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
@@ -233,7 +222,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	public JButton getPacientsButton() {
 		return pacientsButton;
 	}
-	
+
 	public void setCreateUserButton(JButton createUserButton) {
 		this.createUserButton = createUserButton;
 	}
@@ -253,7 +242,7 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	public void setStatisticsButton(JButton statisticsButton) {
 		this.statisticsButton = statisticsButton;
 	}
-	
+
 	public JButton getDeleteUserButton() {
 		return deleteUserButton;
 	}
@@ -261,13 +250,21 @@ public class DashboardScreen extends JFrame implements ActionListener, WindowLis
 	public void setDeleteUserButton(JButton deleteUserButton) {
 		this.deleteUserButton = deleteUserButton;
 	}
-	
+
 	public JButton getdeletePatientButton() {
 		return deletePatientButton;
 	}
 
 	public void setdeletePatientButton(JButton deletePatientButton) {
 		this.deletePatientButton = deletePatientButton;
+	}
+
+	public JButton getInfoButton() {
+		return infoButton;
+	}
+
+	public void setInfoButton(JButton infoButton) {
+		this.infoButton = infoButton;
 	}
 
 	// Method for generating patient statistics.
