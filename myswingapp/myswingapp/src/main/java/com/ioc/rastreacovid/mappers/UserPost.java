@@ -10,15 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
+//Class to obtain the user data and to be able to do post
+public class UserPost {
+	String name;
+	String surname;
+	String password;
+	String passwordConfirm;
+	String email;
+	String type;
+	Integer phone;
 
-public class Token {
-    String token;
-    
-    public String getToken() {
-        return this.token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

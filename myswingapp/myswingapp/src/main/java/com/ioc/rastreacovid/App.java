@@ -10,19 +10,19 @@ import com.ioc.rastreacovid.screens.LoginForm;
  *
  */
 public class App {
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        System.out.println("Hello World!");
-        Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
-        String token = prefs.get("token", "0");
-        if (token == "0" || token.equals("token")) {
-            LoginForm frame = new LoginForm();
-            frame.setSize(500, 500);
-            frame.setVisible(true);
-        } else {
-            DashboardScreen frame = new DashboardScreen();
-            frame.setSize(500, 500);
-            frame.setVisible(true);
-        }
-    }
+		System.out.println("Benvingut a l'aplicació versió escriptori de RastreaCovid");
+		Preferences prefs = Preferences.userNodeForPackage(LoginForm.class);
+		String token = prefs.get("token", "0");
+		if (token == "0" || token.equals("token")) {
+			LoginForm frame = new LoginForm();
+			frame.setSize(500, 500);
+			frame.setVisible(true);
+		} else {
+			DashboardScreen frame = new DashboardScreen();
+			frame.setSize(500, 500);
+			frame.setVisible(true);
+		}
+	}
 }
